@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="description" content="Trợ Lý Tiếng Anh Tiểu học — Soạn giáo án, ra đề, chấm bài, quản lý lớp học và liên lạc phụ huynh qua Zalo. Dành cho giáo viên Tiếng Anh Tiểu học." />
 <meta name="theme-color" content="#0f766e" />
-<meta name="application-name" content="Trợ Lý GV Ngữ Văn" />
+<meta name="application-name" content="Trợ Lý Tiếng Anh" />
 <meta property="og:title" content="Trợ Lý Tiếng Anh Tiểu học" />
 <meta property="og:description" content="Soạn giáo án • Ra đề • Chấm bài • Quản lý lớp + Zalo" />
 <meta property="og:type" content="website" />
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%230f766e'/><stop offset='1' stop-color='%23be185d'/></linearGradient></defs><rect width='64' height='64' rx='14' fill='url(%23g)'/><text x='32' y='44' font-size='34' text-anchor='middle' fill='white' font-family='serif' font-weight='700'>V</text><circle cx='48' cy='16' r='6' fill='%23fde68a'/></svg>" />
-<link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%230f766e'/><stop offset='1' stop-color='%23be185d'/></linearGradient></defs><rect width='64' height='64' rx='14' fill='url(%23g)'/><text x='32' y='44' font-size='34' text-anchor='middle' fill='white' font-family='serif' font-weight='700'>V</text></svg>" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%230f766e'/><stop offset='1' stop-color='%23be185d'/></linearGradient></defs><rect width='64' height='64' rx='14' fill='url(%23g)'/><text x='32' y='44' font-size='34' text-anchor='middle' fill='white' font-family='serif' font-weight='700'>A</text><circle cx='48' cy='16' r='6' fill='%23fde68a'/></svg>" />
+<link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%230f766e'/><stop offset='1' stop-color='%23be185d'/></linearGradient></defs><rect width='64' height='64' rx='14' fill='url(%23g)'/><text x='32' y='44' font-size='34' text-anchor='middle' fill='white' font-family='serif' font-weight='700'>A</text></svg>" />
 <title>Trợ Lý Tiếng Anh Tiểu học</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
@@ -1387,6 +1387,7 @@ const chamBaiTuDong = (text, loaiBai, topic = '') => {
 
 // ============== BREADCRUMB ==============
 const Breadcrumb = ({ items, onHome }) => (
+  <nav className="flex items-center gap-0.5 text-sm mb-5 flex-wrap">
     <button onClick={onHome}
       className="flex items-center gap-1.5 text-rose-400 hover:text-rose-700 transition-colors px-2.5 py-1.5 rounded-lg hover:bg-rose-50 font-medium border border-transparent hover:border-rose-100">
       <Icon name="Home" size={13} />
@@ -1468,7 +1469,7 @@ const Sidebar = ({ active, setActive, collapsed, setCollapsed, onChatOpen, mobil
             </div>
             <div>
               <h1 className="text-[15px] font-bold leading-tight font-display text-rose-900">Trợ Lý GV</h1>
-              <p className="text-[10px] text-rose-400 italic">Ngữ văn THCS · CTGDPT 2018</p>
+              <p className="text-[10px] text-rose-400 italic">Tiếng Anh Tiểu học · CTGDPT 2018</p>
             </div>
           </div>
         )}
@@ -1834,7 +1835,7 @@ const BatchGradeView = ({ cls, asg, fbUser, data, onBack }) => {
   const aiGradeOne = async (sub) => {
     const hasImages = sub.images && sub.images.length > 0;
     if (hasImages && !getClaudeApiKey()) return { error: 'Cần Claude API Key để chấm bài ảnh' };
-    const prompt = `Bạn là giáo viên Ngữ văn THCS. Hãy CHẤM bài làm học sinh theo đề. Trả lời tiếng Việt.\n\n=== ĐỀ ===\n${asg.body}\n\n=== BÀI LÀM ===\n${sub.answer||'(trống)'}${hasImages?'\n\n⚠️ HS nộp bằng ẢNH chụp bài viết tay đính kèm. Đọc kỹ chữ viết tay rồi chấm.':''}\nCho ĐIỂM thang 10 và NHẬN XÉT ngắn gọn, giọng động viên.\nJSON thuần: {"diem": <0-10>, "nhanxet": "..."}`;
+    const prompt = `Bạn là giáo viên Tiếng Anh Tiểu học tại Việt Nam (bộ Global Success). Hãy CHẤM bài làm học sinh theo đề. Trả lời tiếng Việt.\n\n=== ĐỀ ===\n${asg.body}\n\n=== BÀI LÀM ===\n${sub.answer||'(trống)'}${hasImages?'\n\n⚠️ HS nộp bằng ẢNH chụp bài viết tay đính kèm. Đọc kỹ chữ viết tay rồi chấm.':''}\nHọc sinh Tiểu học nên chỉ cần câu đơn giản, đúng cấu trúc cơ bản. Xem xét Ngữ pháp, Từ vựng, Nội dung.\nCho ĐIỂM thang 10 và NHẬN XÉT ngắn gọn, giọng động viên.\nJSON thuần: {"diem": <0-10>, "nhanxet": "..."}`;
     const r = hasImages ? await callClaudeVisionAPI(prompt, sub.images, 1400) : await callGroqAPI(prompt, 1200);
     if (r.error) return r;
     try {
@@ -2769,7 +2770,7 @@ const PlanModal = ({ subTab, item, data, setData, selectedClass, selectedBook, t
           </div>
           <div id={'plan-preview-' + form.id} className="bg-white p-8 border rounded-lg" style={{ fontFamily: 'Times New Roman, serif', display: showPreview ? 'block' : 'none' }}>
             <div className="text-center mb-6">
-              <p className="font-bold">TRƯỜNG {schoolName?.toUpperCase() || 'THCS ...'}</p>
+              <p className="font-bold">TRƯỜNG {schoolName?.toUpperCase() || 'TIỂU HỌC ...'}</p>
               <p className="text-sm">TỔ KHOA HỌC XÃ HỘI - BỘ MÔN NGỮ VĂN</p>
               <h1 className="text-2xl font-bold mt-4 uppercase">{subTab.label.toUpperCase()}</h1>
               <p className="font-bold mt-1">{form.title}</p>
@@ -2866,7 +2867,7 @@ const LessonModal = ({ subTab, item, data, setData, selectedClass, selectedBook,
     const chuDe = form.theme || (CHU_DE_THEO_LOP[form.grade] || [])[0] || 'Chủ đề';
     setForm({ ...form, title: form.title || `Giáo án: ${form.lessonName || chuDe} - Lớp ${form.grade}`,
       mucTieu: `**1. Kiến thức:** Hiểu nội dung, nghệ thuật văn bản.\n**2. Năng lực:** ${NANG_LUC_DAC_THU.join('; ')}.\n**3. Phẩm chất:** ${PHAM_CHAT.join('; ')}.`,
-      thietBi: `- SGK ${SACH_GIAO_KHOA.find(b => b.id === form.book)?.ten} Ngữ văn ${form.grade}\n- Máy chiếu, phiếu học tập.`,
+      thietBi: `- SGK ${SACH_GIAO_KHOA.find(b => b.id === form.book)?.ten} - Lớp ${form.grade}\n- Máy chiếu, phiếu học tập, tranh ảnh/audio minh họa.`,
       hoatDong1: `**HĐ1: MỞ ĐẦU (5p)**\nMục tiêu: Tạo hứng thú.\nNội dung: Xem video/tranh về "${chuDe}".`,
       hoatDong2: `**HĐ2: HÌNH THÀNH KIẾN THỨC (30p)**\nNV1: Tác giả, tác phẩm. NV2: Đọc-hiểu. NV3: Tổng kết.`,
       hoatDong3: `**HĐ3: LUYỆN TẬP (7p)**\nTrò chơi "Ai nhanh - Ai đúng".`,
@@ -2936,7 +2937,7 @@ const LessonModal = ({ subTab, item, data, setData, selectedClass, selectedBook,
 
         // Subtitle
         doc.setFontSize(16);
-        doc.text(form.subtitle || 'Outline Ngữ Văn', pageWidth / 2, pageHeight / 2 + 10, { align: 'center' });
+        doc.text(form.subtitle || 'Outline Tiếng Anh', pageWidth / 2, pageHeight / 2 + 10, { align: 'center' });
 
         // ===== SLIDES NỘI DUNG =====
         slidesData.slides.forEach((slide, slideIdx) => {
@@ -3030,11 +3031,11 @@ const LessonModal = ({ subTab, item, data, setData, selectedClass, selectedBook,
           </div>
           <div id={'lesson-preview-' + form.id} className="bg-white p-8 border rounded-lg" style={{ fontFamily: 'Times New Roman, serif', display: showPreview ? 'block' : 'none' }}>
             <div className="text-center mb-6">
-              <p className="font-bold">TRƯỜNG {schoolName?.toUpperCase() || 'THCS ...'}</p>
+              <p className="font-bold">TRƯỜNG {schoolName?.toUpperCase() || 'TIỂU HỌC ...'}</p>
               <p className="italic text-sm">Giáo viên: {teacherName || '...'}</p>
               <h1 className="text-2xl font-bold mt-4 uppercase">{subTab.label.toUpperCase()}</h1>
               <p className="font-bold mt-1">{form.title}</p>
-              <p className="text-sm mt-1">Ngữ văn {form.grade} - {form.duration}</p>
+              <p className="text-sm mt-1">Tiếng Anh Lớp {form.grade} - {form.duration} phút</p>
             </div>
             <div className="space-y-4 text-sm" style={{whiteSpace:'pre-wrap'}}>
               {isLesson && <>
@@ -3142,19 +3143,18 @@ const ExamTab = ({ data, setData, selectedClass, selectedBook, teacherName, scho
       ) : activeSubTab === 'finder' ? (
         <NguLieuFinderView data={data} setData={setData} selectedClass={selectedClass} onBack={() => setActiveSubTab('corpus')}
           onCreateExam={(item) => {
-            const grade = selectedClass || 9;
-            const gradeExamType = grade >= 9 ? 'vao10' : '45p';
+            const grade = selectedClass || 3;
             const newExam = {
               id: Date.now(),
-              title: `Đề Kiểm tra Ngữ văn ${grade} — ${item.title || 'Ngữ liệu AI'}`,
-              grade, examType: gradeExamType,
-              duration: gradeExamType === 'vao10' ? 90 : 45,
+              title: `Đề Kiểm tra Tiếng Anh Lớp ${grade} — ${item.title || 'Ngữ liệu AI'}`,
+              grade, examType: '35p',
+              duration: 35,
               totalScore: 10,
               theme: item.theme || '',
               passageTitle: item.title || '',
               passageAuthor: item.author || '',
               passageContent: item.fullText || '',
-              passageGenre: item.genre || 'van_hoc',
+              passageGenre: item.genre || 'reading',
               passageNLVHTitle: '', passageNLVHContent: '', passageNLVHAuthor: '',
               matrixConfig: { dochieu: { nb: 2, th: 2, vd: 1, vdc: 0 }, viet: { nb: 0, th: 0, vd: 1, vdc: 0 } },
               questions: [], answerKey: '', rubric: '', questionText: '',
@@ -3237,8 +3237,8 @@ const ExamModal = ({ item, data, setData, selectedClass, selectedBook, teacherNa
   // Merge defaults với item để tránh crash khi item thiếu trường (vd: đề tạo từ AutoGen)
   const defaultForm = {
     id: Date.now(), title: '', grade: selectedClass || 9, book: selectedBook,
-    theme: '', examType: '45p', duration: 45, totalScore: 10,
-    passageTitle: '', passageContent: '', passageAuthor: '', passageGenre: 'van_hoc',
+    theme: '', examType: '35p', duration: 35, totalScore: 10,
+    passageTitle: '', passageContent: '', passageAuthor: '', passageGenre: 'reading',
     passageNLVHTitle: '', passageNLVHContent: '', passageNLVHAuthor: '',
     matrixConfig: { dochieu: { nb: 2, th: 2, vd: 1, vdc: 0 }, viet: { nb: 0, th: 0, vd: 1, vdc: 0 } },
     questions: [], answerKey: '', rubric: [], questionText: '',
@@ -3284,10 +3284,10 @@ const ExamModal = ({ item, data, setData, selectedClass, selectedBook, teacherNa
 
       // Nếu không có questions array nhưng có questionText, dùng questionText
       const useQuestionText = form.questions.length === 0 && form.questionText;
-      const prompt = `Bạn là chuyên gia soạn đáp án đề thi Ngữ văn THCS theo chương trình GDPT 2018.
+      const prompt = `Bạn là chuyên gia soạn đáp án đề thi Tiếng Anh Tiểu học theo chương trình GDPT 2018 (bộ Global Success).
 Hãy tạo đáp án + hướng dẫn chấm chi tiết cho đề sau.
 
-ĐỀ THI: ${form.title || `${loaiTen} Ngữ văn lớp ${form.grade}`} — Lớp ${form.grade}${passageInfo}
+ĐỀ THI: ${form.title || `${loaiTen} Tiếng Anh lớp ${form.grade}`} — Lớp ${form.grade}${passageInfo}
 
 ${useQuestionText ? `PHẦN CÂU HỎI:\n${form.questionText}` : `══════════════════════════════════
 PHẦN I: ĐỌC HIỂU (3.0 điểm) — ${phan1.length} câu
@@ -3346,7 +3346,7 @@ Viết bằng tiếng Việt, rõ ràng, thực dụng — GV đọc là dùng �
       9: { dh: 'Câu 1 (0.5đ - NB), Câu 2 (0.5đ - NB), Câu 3 (0.5đ - TH), Câu 4 (0.5đ - TH), Câu 5 (1.0đ - VD). Tổng Đọc hiểu: 3.0đ', viet: 'Câu 6 (2.0đ - Nghị luận xã hội ≤200 chữ), Câu 7 (5.0đ - Nghị luận văn học/thơ chuyên sâu). Tổng Viết: 7.0đ' },
     };
     const struct = EXAM_STRUCT[grade] || EXAM_STRUCT[6];
-    const prompt = `Bạn là giáo viên Ngữ văn THCS chuyên nghiệp. Dựa trên ngữ liệu sau, hãy soạn CÂU HỎI và ĐÁP ÁN hoàn chỉnh theo chuẩn GDPT 2018.
+    const prompt = `Bạn là giáo viên Tiếng Anh Tiểu học chuyên nghiệp. Dựa trên ngữ liệu sau, hãy soạn CÂU HỎI và ĐÁP ÁN hoàn chỉnh theo chuẩn GDPT 2018.
 
 NGỮ LIỆU:
 Tên: ${form.passageTitle || '(đoạn trích)'}
@@ -3403,41 +3403,43 @@ YÊU CẦU:
     const apiKey = getGroqApiKey();
     if (!getClaudeApiKey() && !getGroqApiKey() && !getUseOllama()) { alert('Cần cấu hình AI (Claude / Groq / Ollama) trong ⚙️ Cài đặt AI trước.'); return; }
     setGeneratingFullExam(true);
-    const grade = form.grade || 6;
-    const examType = form.examType || '45p';
+    const grade = form.grade || 3;
+    const examType = form.examType || '35p';
     const EXAM_STRUCT = {
-      6: { dh: '3 câu đọc hiểu (2 NB×0.5đ + 1 TH×1.0đ)', viet: '2 câu viết (TV 1.5đ + Văn 5.0đ)', total: 10 },
-      7: { dh: '4 câu đọc hiểu (2 NB×0.5đ + 1 TH×0.75đ + 1 VD×0.75đ)', viet: '2 câu viết (TV 1.5đ + Văn 5.0đ)', total: 10 },
-      8: { dh: '5 câu đọc hiểu (2 NB×0.5đ + 2 TH×0.5đ + 1 VD×1.0đ)', viet: '2 câu viết (NLXH 2.0đ + NLVH 5.0đ)', total: 10 },
-      9: { dh: '5 câu đọc hiểu (2 NB×0.5đ + 2 TH×0.5đ + 1 VD×1.0đ)', viet: '2 câu viết (NLXH 2.0đ + NLVH 5.0đ)', total: 10 },
+      1: { nn: '4 câu Từ vựng + Ngữ pháp (4 NB×0.5đ)', viet: '1 câu Viết (2 câu đơn theo tranh, 2.0đ)', total: 10 },
+      2: { nn: '5 câu Từ vựng + Ngữ pháp (3 NB×0.5đ + 2 TH×0.5đ)', viet: '1 câu Viết (2-3 câu đơn, 2.0đ)', total: 10 },
+      3: { nn: '6 câu Ngữ pháp/Từ vựng/Đọc hiểu (3 NB×0.5đ + 2 TH×0.5đ + 1 VD×0.5đ)', viet: '1 câu Viết đoạn ngắn 3-5 câu (2.5đ)', total: 10 },
+      4: { nn: '6 câu Ngữ pháp/Từ vựng/Đọc hiểu (2 NB×0.5đ + 3 TH×0.5đ + 1 VD×0.5đ)', viet: '1 câu Viết đoạn 4-5 câu (3.0đ)', total: 10 },
+      5: { nn: '7 câu Ngữ pháp/Từ vựng/Đọc hiểu (2 NB×0.5đ + 3 TH×0.5đ + 2 VD×0.5đ)', viet: '1 câu Viết đoạn 5-7 câu (3.0đ)', total: 10 },
     };
-    const struct = EXAM_STRUCT[grade] || EXAM_STRUCT[6];
-    const loaiDe = { '45p':'45 phút (1 tiết)', '15p':'15 phút', 'giua_ky':'Giữa học kỳ (90 phút)', 'cuoi_ky':'Cuối học kỳ (90 phút)' }[examType] || examType;
-    const chuDe = form.theme || (CHU_DE_THEO_LOP[grade] || [])[0] || 'Thiên nhiên và cuộc sống';
-    const prompt = `Bạn là giáo viên Ngữ văn THCS chuyên nghiệp. Hãy soạn MỘT ĐỀ KIỂM TRA hoàn chỉnh theo đúng chuẩn GDPT 2018.
+    const struct = EXAM_STRUCT[grade] || EXAM_STRUCT[3];
+    const loaiDe = { '35p':'35 phút', '15p':'15 phút', 'giuaky':'Giữa học kỳ (40 phút)', 'cuoiky':'Cuối học kỳ (40 phút)' }[examType] || examType;
+    const chuDe = form.theme || (CHU_DE_THEO_LOP[grade] || [])[0] || 'My Family';
+    const prompt = `Bạn là giáo viên Tiếng Anh Tiểu học chuyên nghiệp tại Việt Nam, dạy theo bộ sách Global Success. Hãy soạn MỘT ĐỀ KIỂM TRA Tiếng Anh hoàn chỉnh, PHÙ HỢP TRÌNH ĐỘ HỌC SINH LỚP ${grade} (câu đơn giản, từ vựng cơ bản).
 
 YÊU CẦU:
-- Lớp: ${grade}
+- Lớp: ${grade} (Tiểu học)
 - Loại đề: ${loaiDe}
-- Chủ đề: ${chuDe}
-- Cấu trúc phần Đọc hiểu: ${struct.dh}
-- Cấu trúc phần Viết: ${struct.viet}
+- Chủ đề (Unit): ${chuDe}
+- Cấu trúc Phần I (Ngữ pháp - Từ vựng - Đọc hiểu): ${struct.nn}
+- Cấu trúc Phần II (Viết): ${struct.viet}
 - Tổng điểm: ${struct.total}
 - ${buildQuestionTypeInstruction(form.aiQuestionType)}
+- Ngôn ngữ đề bài viết bằng tiếng Anh đơn giản (hướng dẫn có thể kèm tiếng Việt); đoạn văn/hội thoại đọc hiểu do AI tự soạn mới, KHÔNG sao chép nguyên văn từ sách giáo khoa.
 
 ĐỊNH DẠNG OUTPUT (JSON thuần túy, không có markdown, xuống dòng trong chuỗi PHẢI viết là \\n):
 {
   "tieuDe": "tên đề ngắn gọn",
   "nguLieu": {
-    "tieuDe": "tên tác phẩm/đoạn trích",
-    "tacGia": "tác giả",
-    "noiDung": "nội dung đoạn trích 100-200 chữ phù hợp lớp ${grade}"
+    "tieuDe": "tên đoạn văn/hội thoại (tự soạn mới)",
+    "tacGia": "Soạn bởi AI",
+    "noiDung": "đoạn văn/hội thoại tiếng Anh ngắn (30-60 từ) phù hợp lớp ${grade}, chủ đề ${chuDe}"
   },
   "cauHoi": "Toàn bộ câu hỏi Phần I và Phần II viết dạng văn bản thuần, mỗi câu một dòng, có số điểm",
   "dapAn": "Toàn bộ đáp án + hướng dẫn chấm chi tiết, mỗi câu có thang điểm cụ thể"
 }
 
-Chú ý: Câu hỏi Đọc hiểu phải bám sát ngữ liệu. Câu Viết phải có yêu cầu rõ ràng về độ dài và nội dung.`;
+Chú ý: Câu hỏi Phần I (Ngữ pháp/Từ vựng/Đọc hiểu) nên bám sát đoạn văn/hội thoại và chủ đề Unit. Câu Viết phải có yêu cầu rõ ràng về số câu và gợi ý nội dung (dùng câu hỏi gợi ý như What/Where/Who để học sinh dễ viết).`;
 
     const result = await callGroqAPI(prompt, 2000);
     if (result.error) { alert('Lỗi AI: ' + result.error); setGeneratingFullExam(false); return; }
@@ -3448,7 +3450,7 @@ Chú ý: Câu hỏi Đọc hiểu phải bám sát ngữ liệu. Câu Viết ph�
     if (parsed.ok) {
       setForm(prev => ({
         ...prev,
-        title: prev.title || (parsed.data.tieuDe || `Đề ${loaiDe} Ngữ văn ${grade}`),
+        title: prev.title || (parsed.data.tieuDe || `Đề ${loaiDe} Tiếng Anh Lớp ${grade}`),
         passageTitle: nguLieu?.tieuDe || prev.passageTitle,
         passageAuthor: nguLieu?.tacGia || prev.passageAuthor,
         passageContent: nguLieu?.noiDung || prev.passageContent,
@@ -3472,7 +3474,7 @@ Chú ý: Câu hỏi Đọc hiểu phải bám sát ngữ liệu. Câu Viết ph�
       : SAMPLE_PASSAGES[Math.floor(Math.random() * SAMPLE_PASSAGES.length)];
     const questions = []; let qI = 1;
 
-    // ── PHẦN I: Đọc hiểu — tính điểm theo mức độ ──
+    // ── PHẦN I: Ngữ pháp + Từ vựng + Đọc hiểu — tính điểm theo mức độ ──
     const dhCfg = form.matrixConfig.dochieu || {};
     const dhNB = dhCfg.nb || 0, dhTH = dhCfg.th || 0;
     const dhVD = dhCfg.vd || 0, dhVDC = dhCfg.vdc || 0;
@@ -3481,16 +3483,20 @@ Chú ý: Câu hỏi Đọc hiểu phải bám sát ngữ liệu. Câu Viết ph�
     const dhVDScore = parseFloat((dhRemaining / Math.max(1, dhVD + dhVDC)).toFixed(2));
     const dhScoreMap = { nb: 0.5, th: 0.5, vd: dhVDScore, vdc: dhVDScore };
     const dhTypeMap = { nb: 'mc', th: 'mc', vd: 'essay', vdc: 'essay' };
+    // Gộp ngân hàng câu hỏi Ngữ pháp + Từ vựng + Đọc hiểu làm nguồn cho Phần I
+    const phan1Skills = ['grammar', 'vocabulary', 'reading'];
 
     MUC_DO_NHAN_THUC.forEach(level => {
       const count = dhCfg[level.id] || 0;
-      const bank = [...(QUESTION_BANK.dochieu?.[level.id] || [])].sort(() => Math.random() - 0.5);
-      for (let i = 0; i < count && i < bank.length; i++) {
+      const bank = phan1Skills.flatMap(sk => (QUESTION_BANK[sk]?.[level.id] || []).map(q => ({ q, sk })));
+      const shuffled = [...bank].sort(() => Math.random() - 0.5);
+      for (let i = 0; i < count && i < shuffled.length; i++) {
+        const skillLabel = LOAI_VAN_BAN.find(l => l.id === shuffled[i].sk)?.ten || 'Ngôn ngữ';
         questions.push({
-          index: qI++, field: 'dochieu', fieldLabel: 'Đọc hiểu', phan: 1,
+          index: qI++, field: 'dochieu', fieldLabel: `${skillLabel}`, phan: 1,
           level: level.id, levelLabel: level.ten,
           type: dhTypeMap[level.id] || 'essay',
-          content: bank[i],
+          content: shuffled[i].q,
           score: dhScoreMap[level.id] || 0.5,
           options: dhTypeMap[level.id] === 'mc' ? ['', '', '', ''] : undefined,
           correctAnswer: dhTypeMap[level.id] === 'mc' ? 'A' : undefined,
@@ -3505,33 +3511,33 @@ Chú ý: Câu hỏi Đọc hiểu phải bám sát ngữ liệu. Câu Viết ph�
 
     MUC_DO_NHAN_THUC.forEach(level => {
       const count = vietCfg[level.id] || 0;
-      const bank = [...(QUESTION_BANK.viet?.[level.id] || [])].sort(() => Math.random() - 0.5);
+      const bank = [...(QUESTION_BANK.writing?.[level.id] || [])].sort(() => Math.random() - 0.5);
       for (let i = 0; i < count && i < bank.length; i++) {
         questions.push({
-          index: qI++, field: 'viet', fieldLabel: 'Viết / Làm văn', phan: 2,
+          index: qI++, field: 'viet', fieldLabel: 'Viết (Writing)', phan: 2,
           level: level.id, levelLabel: level.ten,
           type: 'essay', content: bank[i], score: vietScore,
         });
       }
     });
 
-    // Rubric phần Viết
+    // Rubric phần Viết — theo tiêu chí Nội dung/Ngữ pháp/Từ vựng/Trình bày
     const vietQs = questions.filter(q => q.field === 'viet');
     const rubric = vietQs.map(q => ({
       cauSo: q.index, tenCau: `Câu ${q.index} — Viết (${q.score}đ)`,
       tienChi: [
-        { y: 'Mở bài: Dẫn dắt, giới thiệu đúng trọng tâm', diem: parseFloat((q.score * 0.15).toFixed(2)), goi_y: '' },
-        { y: 'Thân bài: Triển khai đầy đủ ý, có dẫn chứng phù hợp', diem: parseFloat((q.score * 0.55).toFixed(2)), goi_y: '' },
-        { y: 'Kết bài: Khái quát, có dư âm', diem: parseFloat((q.score * 0.15).toFixed(2)), goi_y: '' },
-        { y: 'Diễn đạt, chính tả, sáng tạo', diem: parseFloat((q.score * 0.15).toFixed(2)), goi_y: '' },
+        { y: 'Nội dung: Trả lời đúng yêu cầu đề bài, đủ ý', diem: parseFloat((q.score * 0.4).toFixed(2)), goi_y: '' },
+        { y: 'Ngữ pháp: Đúng cấu trúc câu, đúng thì', diem: parseFloat((q.score * 0.3).toFixed(2)), goi_y: '' },
+        { y: 'Từ vựng: Dùng từ đúng và phù hợp chủ đề', diem: parseFloat((q.score * 0.2).toFixed(2)), goi_y: '' },
+        { y: 'Chính tả & trình bày', diem: parseFloat((q.score * 0.1).toFixed(2)), goi_y: '' },
       ]
     }));
 
     const totalGenerated = questions.reduce((s, q) => s + (q.score || 0), 0);
-    const answerKey = `ĐÁP ÁN VÀ HƯỚNG DẪN CHẤM\nMôn Ngữ Văn ${form.grade} — ${LOAI_DE.find(l => l.id === form.examType)?.ten || ''}\n\n${'═'.repeat(50)}\nPHẦN I: ĐỌC HIỂU (3.0 điểm)\n${'═'.repeat(50)}\n\n${questions.filter(q=>q.phan===1).map(q=>`Câu ${q.index} (${q.score}đ) [${q.levelLabel}${q.type==='mc'?' — TN':' — TL'}]:\n${q.content}\n→ Đáp án: [GV điền]\n${'─'.repeat(40)}`).join('\n\n')}\n\n${'═'.repeat(50)}\nPHẦN II: VIẾT (7.0 điểm)\n${'═'.repeat(50)}\n\n${questions.filter(q=>q.phan===2).map(q=>`Câu ${q.index-(dhNB+dhTH+dhVD+dhVDC)} (${q.score}đ) [${q.levelLabel}]:\n${q.content}\n→ Xem rubric chi tiết\n${'─'.repeat(40)}`).join('\n\n')}\n\nTổng điểm: ${totalGenerated.toFixed(1)} / ${form.totalScore}`;
+    const answerKey = `ĐÁP ÁN VÀ HƯỚNG DẪN CHẤM\nMôn Tiếng Anh — Lớp ${form.grade} — ${LOAI_DE.find(l => l.id === form.examType)?.ten || ''}\n\n${'═'.repeat(50)}\nPHẦN I: NGỮ PHÁP - TỪ VỰNG - ĐỌC HIỂU (3.0 điểm)\n${'═'.repeat(50)}\n\n${questions.filter(q=>q.phan===1).map(q=>`Câu ${q.index} (${q.score}đ) [${q.levelLabel}${q.type==='mc'?' — TN':' — TL'}]:\n${q.content}\n→ Đáp án: [GV điền]\n${'─'.repeat(40)}`).join('\n\n')}\n\n${'═'.repeat(50)}\nPHẦN II: VIẾT (7.0 điểm)\n${'═'.repeat(50)}\n\n${questions.filter(q=>q.phan===2).map(q=>`Câu ${q.index-(dhNB+dhTH+dhVD+dhVDC)} (${q.score}đ) [${q.levelLabel}]:\n${q.content}\n→ Xem rubric chi tiết\n${'─'.repeat(40)}`).join('\n\n')}\n\nTổng điểm: ${totalGenerated.toFixed(1)} / ${form.totalScore}\n\n⚠️ Lưu ý: Phần Nói (Speaking) không nằm trong đề giấy này — học sinh làm bài Nói riêng bằng ghi âm qua Cổng Lớp Học, thầy chấm thủ công.`;
 
     setForm({ ...form,
-      title: form.title || `Đề ${LOAI_DE.find(l => l.id === form.examType)?.ten} Ngữ văn ${form.grade} — ${chuDe}`,
+      title: form.title || `Đề ${LOAI_DE.find(l => l.id === form.examType)?.ten} Tiếng Anh Lớp ${form.grade} — ${chuDe}`,
       passageTitle: form.passageTitle || passage.title,
       passageContent: form.passageContent || (passage.fullText || passage.content || ''),
       passageAuthor: form.passageAuthor || (passage.author || ''),
@@ -3541,13 +3547,13 @@ Chú ý: Câu hỏi Đọc hiểu phải bám sát ngữ liệu. Câu Viết ph�
 
   // ── AI sinh đề Thi vào lớp 10 ──
   const generateVao10AI = () => {
-    const p1Bank = passagesForGrade.filter(p => p.genre === (form.passageGenre || 'van_hoc'));
-    const p2Bank = allPassages.filter(p => p.genre === 'van_hoc' && (p.class >= 8 || !p.class));
+    const p1Bank = passagesForGrade.filter(p => p.genre === (form.passageGenre || 'reading'));
+    const p2Bank = allPassages.filter(p => p.genre === 'reading' && (p.class >= 8 || !p.class));
     const passage1 = p1Bank.length > 0 ? p1Bank[Math.floor(Math.random() * p1Bank.length)] : SAMPLE_PASSAGES[0];
     const passage2 = p2Bank.length > 0 ? p2Bank[Math.floor(Math.random() * p2Bank.length)] : SAMPLE_PASSAGES[SAMPLE_PASSAGES.length - 1];
-    const dhNB = [...QUESTION_BANK.dochieu.nb].sort(() => Math.random() - 0.5);
-    const dhTH = [...QUESTION_BANK.dochieu.th].sort(() => Math.random() - 0.5);
-    const dhVD = [...QUESTION_BANK.dochieu.vd].sort(() => Math.random() - 0.5);
+    const dhNB = [...(QUESTION_BANK.reading?.nb || QUESTION_BANK.grammar?.nb || [])].sort(() => Math.random() - 0.5);
+    const dhTH = [...(QUESTION_BANK.reading?.th || QUESTION_BANK.grammar?.th || [])].sort(() => Math.random() - 0.5);
+    const dhVD = [...(QUESTION_BANK.reading?.vd || QUESTION_BANK.grammar?.vd || [])].sort(() => Math.random() - 0.5);
     const questions = [
       { index: 1, phan: 1, loai: 'dh', level: 'nb', levelLabel: 'Nhận biết', type: 'mc', score: 0.5, content: dhNB[0] || 'Xác định thể loại/phương thức biểu đạt chính của văn bản.', options: ['', '', '', ''], correctAnswer: 'A' },
       { index: 2, phan: 1, loai: 'dh', level: 'nb', levelLabel: 'Nhận biết', type: 'mc', score: 0.5, content: dhNB[1] || 'Nhân vật chính trong văn bản là ai?', options: ['', '', '', ''], correctAnswer: 'A' },
@@ -3581,7 +3587,7 @@ Chú ý: Câu hỏi Đọc hiểu phải bám sát ngữ liệu. Câu Viết ph�
     ];
     const answerKey = `HƯỚNG DẪN CHẤM — THI VÀO LỚP 10 MÔN NGỮ VĂN\nThời gian: 120 phút — Tổng điểm: 10.0\n\n${'═'.repeat(50)}\nPHẦN I: ĐỌC HIỂU (3.0 điểm)\n${'═'.repeat(50)}\n\nCâu 1 (0.5đ) [Nhận biết — TN]: ${questions[0].content}\n→ Đáp án: [GV điền]\n\nCâu 2 (0.5đ) [Nhận biết — TN]: ${questions[1].content}\n→ Đáp án: [GV điền]\n\nCâu 3 (0.5đ) [Thông hiểu — TN]: ${questions[2].content}\n→ Đáp án: [GV điền]\n\nCâu 4 (0.5đ) [Thông hiểu — TN]: ${questions[3].content}\n→ Đáp án: [GV điền]\n\nCâu 5 (1.0đ) [Vận dụng — TL]:\n${questions[4].content}\n→ Gợi ý: HS trình bày được bài học thực tiễn, có lí lẽ; chấp nhận nhiều cách diễn đạt hợp lý.\n  + Trình bày đủ ý, lập luận rõ: 0.75 — 1.0đ\n  + Có ý nhưng chưa đầy đủ / chưa rõ: 0.25 — 0.5đ\n\n${'═'.repeat(50)}\nPHẦN II: VIẾT (7.0 điểm)\n${'═'.repeat(50)}\n\nCâu 1 (2.0đ) — NLXH: Xem rubric chi tiết\n\nCâu 2 (5.0đ) — NLVH: Xem rubric chi tiết\n\n⚠️ Lưu ý chung:\n- Khuyến khích bài làm sáng tạo, cách diễn đạt độc đáo.\n- Chấp nhận các kiến giải khác nhau nếu có lí lẽ thuyết phục.\n- Không trừ điểm quá mức vì lỗi chính tả nhỏ (≤3 lỗi: không trừ).`;
     setForm({ ...form,
-      title: form.title || 'Đề Thi Thử vào Lớp 10 Môn Ngữ Văn',
+      title: form.title || 'Đề Kiểm tra Tiếng Anh',
       passageTitle: form.passageTitle || passage1.title,
       passageContent: form.passageContent || (passage1.fullText || passage1.content || ''),
       passageAuthor: form.passageAuthor || (passage1.author || ''),
@@ -3731,7 +3737,7 @@ Chú ý: Câu hỏi Đọc hiểu phải bám sát ngữ liệu. Câu Viết ph�
             <div className="bg-rose-50 p-4 rounded-xl border border-rose-200">
               <h4 className="font-bold text-rose-800 mb-3 flex items-center gap-2"><Icon name="Settings" size={16} /> Thông tin đề</h4>
               <div className="grid grid-cols-2 gap-3">
-                <div className="col-span-2"><label className="block text-sm font-medium mb-1">Tiêu đề *</label><input value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} className="w-full px-3 py-2 border rounded-lg" placeholder="VD: Đề thi thử vào lớp 10 môn Ngữ Văn..." /></div>
+                <div className="col-span-2"><label className="block text-sm font-medium mb-1">Tiêu đề *</label><input value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} className="w-full px-3 py-2 border rounded-lg" placeholder="VD: Đề kiểm tra Tiếng Anh Unit 5..." /></div>
                 <div>
                   <label className="block text-sm font-medium mb-1">Loại đề</label>
                   <select value={form.examType} onChange={e => { const t = LOAI_DE.find(l => l.id === e.target.value); setForm({ ...form, examType: e.target.value, duration: t?.duration || 45, totalScore: t?.totalScore || 10 }); }} className="w-full px-3 py-2 border rounded-lg bg-white">
@@ -3778,13 +3784,13 @@ Chú ý: Câu hỏi Đọc hiểu phải bám sát ngữ liệu. Câu Viết ph�
               <div className="grid grid-cols-2 gap-2 mb-3">
                 <div>
                   <label className="block text-sm font-medium mb-1">Loại văn bản</label>
-                  <select value={form.passageGenre || 'van_hoc'} onChange={e => setForm({ ...form, passageGenre: e.target.value })} className="w-full px-3 py-2 border rounded-lg bg-white text-sm">
+                  <select value={form.passageGenre || 'reading'} onChange={e => setForm({ ...form, passageGenre: e.target.value })} className="w-full px-3 py-2 border rounded-lg bg-white text-sm">
                     {LOAI_VAN_BAN.map(l => <option key={l.id} value={l.id}>{l.icon} {l.ten}</option>)}
                   </select>
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-1">Chọn từ kho</label>
-                  <select onChange={e => { const p = allPassages.find(x => x.id === e.target.value); if (p) setForm({ ...form, passageTitle: p.title, passageContent: p.fullText || p.content || '', passageAuthor: p.author || '', passageGenre: p.genre || 'van_hoc' }); }} className="w-full px-3 py-2 border rounded-lg bg-white text-sm">
+                  <select onChange={e => { const p = allPassages.find(x => x.id === e.target.value); if (p) setForm({ ...form, passageTitle: p.title, passageContent: p.fullText || p.content || '', passageAuthor: p.author || '', passageGenre: p.genre || 'reading' }); }} className="w-full px-3 py-2 border rounded-lg bg-white text-sm">
                     <option value="">-- Chọn ngữ liệu --</option>
                     {passagesForGrade.filter(p => !form.passageGenre || p.genre === form.passageGenre).map(p => <option key={p.id} value={p.id}>{p.title} — {p.author}</option>)}
                   </select>
@@ -3793,7 +3799,7 @@ Chú ý: Câu hỏi Đọc hiểu phải bám sát ngữ liệu. Câu Viết ph�
               <input value={form.passageTitle} onChange={e => setForm({ ...form, passageTitle: e.target.value })} className="w-full px-3 py-2 border rounded-lg mb-2" placeholder="Tiêu đề văn bản" />
               <input value={form.passageAuthor || ''} onChange={e => setForm({ ...form, passageAuthor: e.target.value })} className="w-full px-3 py-2 border rounded-lg mb-2 text-sm" placeholder="Tác giả / Nguồn" />
               <textarea value={form.passageContent} onChange={e => setForm({ ...form, passageContent: e.target.value })} rows={5} className="w-full px-3 py-2 border rounded-lg font-mono text-sm mb-2" placeholder="Dán nội dung ngữ liệu..." />
-              <button onClick={() => { const filtered = passagesForGrade.filter(p => p.genre === (form.passageGenre || 'van_hoc')); const p = filtered.length > 0 ? filtered[Math.floor(Math.random() * filtered.length)] : SAMPLE_PASSAGES[Math.floor(Math.random() * SAMPLE_PASSAGES.length)]; setForm({ ...form, passageTitle: p.title, passageContent: p.fullText || p.content || '', passageAuthor: p.author || '' }); }} className="text-sm bg-blue-600 text-white px-3 py-1.5 rounded hover:bg-blue-700 flex items-center gap-1.5">
+              <button onClick={() => { const filtered = passagesForGrade.filter(p => p.genre === (form.passageGenre || 'reading')); const p = filtered.length > 0 ? filtered[Math.floor(Math.random() * filtered.length)] : SAMPLE_PASSAGES[Math.floor(Math.random() * SAMPLE_PASSAGES.length)]; setForm({ ...form, passageTitle: p.title, passageContent: p.fullText || p.content || '', passageAuthor: p.author || '' }); }} className="text-sm bg-blue-600 text-white px-3 py-1.5 rounded hover:bg-blue-700 flex items-center gap-1.5">
                 <Icon name="Shuffle" size={14} /> Ngữ liệu ngẫu nhiên
               </button>
             </div>
@@ -3806,7 +3812,7 @@ Chú ý: Câu hỏi Đọc hiểu phải bám sát ngữ liệu. Câu Viết ph�
                   <label className="block text-sm font-medium mb-1">Chọn từ kho văn học</label>
                   <select onChange={e => { const p = allPassages.find(x => x.id === e.target.value); if (p) setForm({ ...form, passageNLVHTitle: p.title, passageNLVHContent: p.fullText || p.content || '', passageNLVHAuthor: p.author || '' }); }} className="w-full px-3 py-2 border rounded-lg bg-white text-sm">
                     <option value="">-- Chọn tác phẩm NLVH --</option>
-                    {allPassages.filter(p => p.genre === 'van_hoc' && (p.class >= 8 || !p.class)).map(p => <option key={p.id} value={p.id}>{p.title} — {p.author} {p.class ? `(Lớp ${p.class})` : ''}</option>)}
+                    {allPassages.filter(p => p.genre === 'reading' && (p.class >= 8 || !p.class)).map(p => <option key={p.id} value={p.id}>{p.title} — {p.author} {p.class ? `(Lớp ${p.class})` : ''}</option>)}
                   </select>
                 </div>
                 <input value={form.passageNLVHTitle || ''} onChange={e => setForm({ ...form, passageNLVHTitle: e.target.value })} className="w-full px-3 py-2 border rounded-lg mb-2" placeholder="Tên tác phẩm / đoạn trích" />
@@ -3926,7 +3932,7 @@ Chú ý: Câu hỏi Đọc hiểu phải bám sát ngữ liệu. Câu Viết ph�
                     const phan1 = form.questions.filter(q => q.phan === 1 || (!q.phan && q.field === 'dochieu'));
                     const phan2 = form.questions.filter(q => q.phan === 2 || (!q.phan && q.field === 'viet'));
                     const loaiTen = LOAI_DE.find(l => l.id === form.examType)?.ten || '';
-                    let ak = `ĐÁP ÁN VÀ HƯỚNG DẪN CHẤM\nMôn Ngữ Văn${form.grade ? ' Lớp ' + form.grade : ''} — ${loaiTen}\n${form.title ? '(' + form.title + ')' : ''}\n\n${'═'.repeat(50)}\nPHẦN I: ĐỌC HIỂU (3.0 điểm)\n${'═'.repeat(50)}\n\n`;
+                    let ak = `ĐÁP ÁN VÀ HƯỚNG DẪN CHẤM\nMôn Tiếng Anh${form.grade ? ' Lớp ' + form.grade : ''} — ${loaiTen}\n${form.title ? '(' + form.title + ')' : ''}\n\n${'═'.repeat(50)}\nPHẦN I: NGỮ PHÁP - TỪ VỰNG - ĐỌC HIỂU (3.0 điểm)\n${'═'.repeat(50)}\n\n`;
                     phan1.forEach((q, i) => {
                       ak += `Câu ${i + 1} (${q.score || 0.5}đ) [${q.levelLabel || q.level || 'NB'}]:\n`;
                       ak += `${q.content}\n`;
@@ -3971,14 +3977,14 @@ Chú ý: Câu hỏi Đọc hiểu phải bám sát ngữ liệu. Câu Viết ph�
             {/* Đầu đề theo MẪU BAN HÀNH (GDPT 2018): 2 cột — trái: trường + ĐỀ CHÍNH THỨC; phải: tên kỳ thi, môn, lớp, thời gian */}
             <div className="grid grid-cols-2 gap-6 text-sm mb-4 items-start">
               <div className="text-center">
-                <p className="font-bold uppercase">{schoolName?.toUpperCase() || 'TRƯỜNG THCS .....................'}</p>
+                <p className="font-bold uppercase">{schoolName?.toUpperCase() || 'TRƯỜNG TIỂU HỌC .....................'}</p>
                 <p className="text-xs">TỔ KHOA HỌC XÃ HỘI</p>
                 <p className="mt-2"><span className="font-bold border-2 border-slate-800 px-3 py-0.5 inline-block">ĐỀ CHÍNH THỨC</span></p>
               </div>
               <div className="text-center">
                 <p className="font-bold uppercase">{isVao10 ? 'KỲ THI TUYỂN SINH VÀO LỚP 10' : (LOAI_DE.find(l => l.id === form.examType)?.ten?.toUpperCase() || 'ĐỀ KIỂM TRA')}</p>
                 <p>NĂM HỌC 2025 - 2026</p>
-                <p className="font-bold mt-0.5 uppercase">Môn: Ngữ văn{isVao10 ? '' : ` - Lớp ${form.grade}`}</p>
+                <p className="font-bold mt-0.5 uppercase">Môn: Tiếng Anh - Lớp {form.grade}</p>
                 <p className="italic mt-0.5">Thời gian làm bài: {form.duration} phút</p>
                 <p className="italic text-xs">(không kể thời gian phát đề)</p>
               </div>
@@ -4075,7 +4081,7 @@ Chú ý: Câu hỏi Đọc hiểu phải bám sát ngữ liệu. Câu Viết ph�
             <div id={'exam-answer-' + form.id} style={{display:'none'}}>
               <div style={{fontFamily:'Times New Roman,serif', fontSize:'13pt', padding:'20px'}}>
                 <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:'16px', marginBottom:'16px', fontSize:'12pt'}}>
-                  <div><strong>{schoolName?.toUpperCase() || 'TRƯỜNG THCS ...'}</strong><br/>TỔ KHXH - NHÓM NGỮ VĂN</div>
+                  <div><strong>{schoolName?.toUpperCase() || 'TRƯỜNG TIỂU HỌC ...'}</strong><br/>TỔ NGOẠI NGỮ</div>
                   <div style={{textAlign:'right'}}>NĂM HỌC 2025-2026<br/><em>{LOAI_DE.find(l => l.id === form.examType)?.ten || ''}</em></div>
                 </div>
                 <h1 style={{textAlign:'center', fontSize:'16pt', fontWeight:'bold', textTransform:'uppercase', marginBottom:'8px'}}>
@@ -4173,7 +4179,7 @@ Chú ý: Câu hỏi Đọc hiểu phải bám sát ngữ liệu. Câu Viết ph�
 
 const MatrixModal = ({ item, data, setData, selectedClass, teacherName, schoolName, onClose }) => {
   const isEdit = !!item;
-  const [form, setForm] = useState(item || { id: Date.now(), title: '', grade: selectedClass, examType: '45p', subtitle: '', matrixConfig: { dochieu: { nb: 2, th: 2, vd: 1, vdc: 0 }, viet: { nb: 0, th: 0, vd: 1, vdc: 0 } }, notes: '', createdAt: new Date().toISOString() });
+  const [form, setForm] = useState(item || { id: Date.now(), title: '', grade: selectedClass, examType: '35p', subtitle: '', matrixConfig: { dochieu: { nb: 2, th: 2, vd: 1, vdc: 0 }, viet: { nb: 0, th: 0, vd: 1, vdc: 0 } }, notes: '', createdAt: new Date().toISOString() });
   const [showPreview, setShowPreview] = useState(false);
   const handleSave = () => {
     if (!form.title.trim()) { alert('Nhập tiêu đề'); return; }
@@ -4203,7 +4209,7 @@ const MatrixModal = ({ item, data, setData, selectedClass, teacherName, schoolNa
             <div><label className="block text-sm font-medium mb-1">Ghi chú</label><textarea value={form.notes} onChange={e => setForm({ ...form, notes: e.target.value })} rows={3} className="w-full px-3 py-2 border rounded-lg" /></div>
           </div>
           <div id={'matrix-preview-' + form.id} className="bg-white p-8 border rounded-lg" style={{ fontFamily: 'Times New Roman, serif', display: showPreview ? 'block' : 'none' }}>
-            <div className="text-center mb-6"><p className="font-bold">TRƯỜNG {schoolName?.toUpperCase() || 'THCS ...'}</p><h1 className="text-xl font-bold mt-4 uppercase">MA TRẬN ĐỀ NGỮ VĂN {form.grade}</h1><p className="font-bold">{form.title}</p></div>
+            <div className="text-center mb-6"><p className="font-bold">TRƯỜNG {schoolName?.toUpperCase() || 'TIỂU HỌC ...'}</p><h1 className="text-xl font-bold mt-4 uppercase">MA TRẬN ĐỀ TIẾNG ANH LỚP {form.grade}</h1><p className="font-bold">{form.title}</p></div>
             <table className="matrix-table w-full text-sm"><thead><tr><th rowSpan="2">Lĩnh vực</th><th colSpan="4">Mức độ</th><th rowSpan="2">Tổng</th></tr><tr>{MUC_DO_NHAN_THUC.map(l => <th key={l.id}>{l.ten}</th>)}</tr></thead><tbody>{LINH_VUC_KIEM_TRA.map(f => <tr key={f.id}><td className="text-left">{f.ten}</td>{MUC_DO_NHAN_THUC.map(l => <td key={l.id}>{form.matrixConfig[f.id]?.[l.id] || 0}</td>)}<td className="font-bold">{getRowTotal(f.id)}</td></tr>)}</tbody></table>
             {form.notes && <div className="mt-4 text-sm" style={{whiteSpace:'pre-wrap'}}><strong>Ghi chú:</strong> {form.notes}</div>}
           </div>
@@ -4353,9 +4359,9 @@ const AutoUpdateModal = ({ data, setData, onClose }) => {
   ];
 
   const WIKISOURCE_TEXTS = [
-    ['https://vi.wikisource.org/wiki/Ch%C3%AD_Ph%C3%A8o','Chí Phèo','Nam Cao',8,'van_hoc','truyện ngắn','số phận con người - bi kịch xã hội'],
-    ['https://vi.wikisource.org/wiki/L%C3%A3o_H%E1%BA%A1c','Lão Hạc','Nam Cao',8,'van_hoc','truyện ngắn','số phận con người - tình cha con'],
-    ['https://vi.wikisource.org/wiki/Nam_qu%E1%BB%91c_s%C6%A1n_h%C3%A0','Nam quốc sơn hà','Lý Thường Kiệt',7,'van_hoc','thơ cổ','yêu nước - chủ quyền dân tộc'],
+    ['https://vi.wikisource.org/wiki/Ch%C3%AD_Ph%C3%A8o','Chí Phèo','Nam Cao',8,'reading','truyện ngắn','số phận con người - bi kịch xã hội'],
+    ['https://vi.wikisource.org/wiki/L%C3%A3o_H%E1%BA%A1c','Lão Hạc','Nam Cao',8,'reading','truyện ngắn','số phận con người - tình cha con'],
+    ['https://vi.wikisource.org/wiki/Nam_qu%E1%BB%91c_s%C6%A1n_h%C3%A0','Nam quốc sơn hà','Lý Thường Kiệt',7,'reading','thơ cổ','yêu nước - chủ quyền dân tộc'],
   ];
 
   const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -4447,7 +4453,7 @@ const AutoUpdateModal = ({ data, setData, onClose }) => {
         const item = {
           id: makeId('VH',grade,i+1), title, author,
           source:`thivien.net — ${url}`,
-          class:grade, genre:'van_hoc', subgenre, theme, difficulty:'medium',
+          class:grade, genre:'reading', subgenre, theme, difficulty:'medium',
           copyright_status, approved:false,
           wordCount:fullText.split(/\s+/).length,
           excerpt:excerptFrom(fullText), fullText, addedAt:new Date().toISOString(),
@@ -4480,7 +4486,7 @@ const AutoUpdateModal = ({ data, setData, onClose }) => {
         if (!content) { errors++; addLog(`  ⚠️ ${title}: không lấy được nội dung`,'warn'); continue; }
         const fullText = cleanText((content.textContent||'').trim(), 600);
         if (fullText.length < 60) { errors++; continue; }
-        const prefix = genre==='van_hoc'?'VH':'NL';
+        const prefix = genre==='reading'?'VH':'NL';
         const item = {
           id: makeId(prefix,grade,50+i), title, author,
           source:`Wikisource — ${url}`,
@@ -4632,7 +4638,7 @@ const KhoNguLieuTab = ({ data, setData, selectedClass, onBack }) => {
               author: item.author || '',
               source: item.source || '',
               class: Number(item.class) || 6,
-              genre: item.genre || 'van_hoc',
+              genre: item.genre || 'reading',
               subgenre: item.subgenre || '',
               theme: item.theme || '',
               difficulty: item.difficulty || 'medium',
@@ -4695,7 +4701,7 @@ const KhoNguLieuTab = ({ data, setData, selectedClass, onBack }) => {
 
   const stats = {
     total: allPassages.length,
-    van_hoc: allPassages.filter(p => p.genre === 'van_hoc').length,
+    van_hoc: allPassages.filter(p => p.genre === 'reading').length,
     thong_tin: allPassages.filter(p => p.genre === 'thong_tin').length,
     nghi_luan: allPassages.filter(p => p.genre === 'nghi_luan').length,
     hanh_chinh: allPassages.filter(p => p.genre === 'hanh_chinh').length,
@@ -4867,7 +4873,7 @@ const PassageModal = ({ item, onSave, onClose }) => {
   const isEdit = !!item;
   const [form, setForm] = useState(item || {
     id: 'USR_' + Date.now(), title: '', author: '', source: '',
-    class: 6, genre: 'van_hoc', subgenre: '', theme: '', difficulty: 'vua',
+    class: 6, genre: 'reading', subgenre: '', theme: '', difficulty: 'vua',
     copyright_status: 'education_use', approved: false, wordCount: 0,
     excerpt: '', fullText: '', addedAt: new Date().toISOString()
   });
@@ -4922,7 +4928,7 @@ const PastePassageModal = ({ onSave, onClose }) => {
   const [rawText, setRawText] = useState('');
   const [form, setForm] = useState({
     id: 'USR_' + Date.now(), title: '', author: '', source: '',
-    class: 6, genre: 'van_hoc', subgenre: '', theme: '', difficulty: 'vua',
+    class: 6, genre: 'reading', subgenre: '', theme: '', difficulty: 'vua',
     copyright_status: 'education_use', approved: false,
     excerpt: '', fullText: '', wordCount: 0, addedAt: new Date().toISOString()
   });
@@ -5029,10 +5035,10 @@ const NguLieuFinderView = ({ data, setData, selectedClass, onBack, onCreateExam 
     setGenerating(true); setResults([]); setStep(2);
     const cfg = EXAM_CONFIGS[examType];
     const ptype = PASSAGE_TYPES.find(p => p.id === passageType);
-    const themeStr = theme ? `Chủ đề ưu tiên: ${theme}.` : 'Chọn chủ đề phù hợp với lứa tuổi HS THCS.';
-    const prompt = `Bạn là chuyên gia Ngữ văn THCS Việt Nam. Hãy TẠO RA 4 ngữ liệu hoàn chỉnh để ra đề thi "${cfg.label}" theo Chương trình GDPT 2018.
+    const themeStr = theme ? `Chủ đề ưu tiên: ${theme}.` : 'Chọn chủ đề phù hợp với lứa tuổi học sinh Tiểu học.';
+    const prompt = `Bạn là chuyên gia Tiếng Anh Tiểu học Việt Nam. Hãy TẠO RA 4 đoạn văn/hội thoại tiếng Anh ngắn (tự soạn mới) để ra đề thi "${cfg.label}" theo Chương trình GDPT 2018 (bộ Global Success).
 YÊU CẦU: Thể loại: ${ptype.label}. Dung lượng KHÔNG QUÁ ${cfg.maxWords} chữ. Trọng tâm: ${cfg.focus}. ${cfg.note}. ${themeStr}${customPrompt ? ' Yêu cầu thêm: ' + customPrompt + '.' : ''}
-Nội dung phải có giá trị nghệ thuật, đặt được câu hỏi đọc hiểu. Ưu tiên tác giả đương đại Việt Nam (2000-2026). KHÔNG lấy từ SGK THCS bộ Kết nối tri thức, Cánh diều, Chân trời sáng tạo.
+Nội dung phải đơn giản, phù hợp trình độ Tiểu học, đặt được câu hỏi đọc hiểu cơ bản. Tự soạn mới hoàn toàn, KHÔNG sao chép nguyên văn từ sách giáo khoa.
 TRẢ LỜI ĐÚNG ĐỊNH DẠNG JSON (chỉ JSON, không thêm text):
 [{"title":"...","author":"...","source":"Nguồn: tên báo/tập thơ, năm","genre":"${passageType}","theme":"...","wordCount":số,"fullText":"Toàn bộ nội dung ngữ liệu đầy đủ","excerpt":"2-3 câu/dòng đặc sắc nhất","suggestedQuestions":["Câu nhận biết","Câu thông hiểu","Câu vận dụng tự luận ngắn"],"whyGood":"Lý do phù hợp ra đề"}]`;
     try {
@@ -5048,7 +5054,7 @@ TRẢ LỜI ĐÚNG ĐỊNH DẠNG JSON (chỉ JSON, không thêm text):
   const handleNormalize = async () => {
     if (!pasteText.trim()) { alert('Cô dán văn bản vào ô bên dưới trước nhé!'); return; }
     setNormalizing(true);
-    const prompt = `Bạn là chuyên gia Ngữ văn THCS. Hãy phân tích và chuẩn hoá đoạn văn bản sau để dùng làm ngữ liệu ra đề thi Ngữ văn THCS theo GDPT 2018.
+    const prompt = `Bạn là chuyên gia Tiếng Anh Tiểu học. Hãy phân tích và chuẩn hoá đoạn văn bản sau để dùng làm ngữ liệu ra đề thi Tiếng Anh Tiểu học theo GDPT 2018.
 VĂN BẢN GỐC: """${pasteText.trim()}"""${pasteSource ? '\nNGUỒN: ' + pasteSource : ''}
 TRẢ LỜI ĐÚNG ĐỊNH DẠNG JSON (chỉ JSON):
 {"title":"...","author":"Tác giả hoặc Chưa xác định","source":"...","genre":"tho/truyen/thongtin/nghiluan/lyca/hanh_chinh","theme":"...","wordCount":số,"fullText":"Văn bản đã chỉnh (cắt về ≤500 chữ, giữ phần hay nhất, trọn ý)","excerpt":"2-3 câu đặc sắc","suitableFor":"Phù hợp đề gì","suggestedQuestions":["Câu nhận biết","Câu thông hiểu","Câu vận dụng tự luận ngắn"],"notes":"Lưu ý bản quyền (1 câu)"}`;
@@ -5067,7 +5073,7 @@ TRẢ LỜI ĐÚNG ĐỊNH DẠNG JSON (chỉ JSON):
       id: 'USR_' + Date.now() + '_' + idx,
       title: item.title || 'Không tiêu đề', author: item.author || '',
       source: item.source || '', class: selectedClass || 9,
-      genre: item.genre || 'van_hoc', subgenre: item.theme || '',
+      genre: item.genre || 'reading', subgenre: item.theme || '',
       theme: item.theme || '', difficulty: 'trung_binh',
       copyright_status: 'unknown', approved: false,
       wordCount: item.wordCount || (item.fullText || '').split(/\s+/).length,
@@ -5266,7 +5272,7 @@ TRẢ LỜI ĐÚNG ĐỊNH DẠNG JSON (chỉ JSON):
 // ============== 🤖 RA ĐỀ TỰ ĐỘNG (AUTO-GENERATE EXAM) ==============
 const AutoGenExamView = ({ data, setData, selectedClass, teacherName, schoolName, onBack }) => {
   const [selectedGrade, setSelectedGrade] = useState(selectedClass || 6);
-  const [selectedGenre, setSelectedGenre] = useState('van_hoc');
+  const [selectedGenre, setSelectedGenre] = useState('reading');
   const [selectedTheme, setSelectedTheme] = useState('');
   const [selectedExamType, setSelectedExamType] = useState('45p');
   const [questionType, setQuestionType] = useState('mix'); // 'mix' | 'tn' | 'tl' — chọn TRƯỚC khi tạo
@@ -5297,7 +5303,7 @@ const AutoGenExamView = ({ data, setData, selectedClass, teacherName, schoolName
       const totalScore = examConfig.totalScore;
 
       // Prompt chuẩn GDPT 2018 — 2 phần: Đọc hiểu 3đ + Viết 7đ — JSON output
-      const prompt = `Bạn là giáo viên Ngữ Văn THCS chuyên nghiệp. Hãy tạo đề kiểm tra "${loaiDe}" môn Ngữ văn lớp ${selectedGrade} theo chuẩn GDPT 2018.
+      const prompt = `Bạn là giáo viên Tiếng Anh Tiểu học chuyên nghiệp. Hãy tạo đề kiểm tra "${loaiDe}" môn Tiếng Anh lớp ${selectedGrade} theo chuẩn GDPT 2018 (bộ Global Success).
 
 NGỮ LIỆU (${genreInfo?.ten || 'Văn bản'} — NGOÀI SÁCH GIÁO KHOA):
 Tiêu đề: ${passage.title}
@@ -5343,7 +5349,7 @@ Chú ý: Câu hỏi Đọc hiểu PHẢI BÁM SÁT ngữ liệu. Câu trắc ngh
 
       const exam = {
         id: Date.now(),
-        title: `Đề ${loaiDe} Ngữ văn ${selectedGrade} — ${themeName}`,
+        title: `Đề ${loaiDe} Tiếng Anh Lớp ${selectedGrade} — ${themeName}`,
         grade: selectedGrade,
         theme: passage.theme || selectedTheme,
         examType: selectedExamType,
@@ -5464,7 +5470,7 @@ Chú ý: Câu hỏi Đọc hiểu PHẢI BÁM SÁT ngữ liệu. Câu trắc ngh
       {preview && generatedExam && (
         <div className="bg-white border rounded-xl p-8" style={{ fontFamily: 'Times New Roman, serif' }}>
           <div className="grid grid-cols-2 gap-4 text-sm mb-4">
-            <div><p className="font-bold">{schoolName?.toUpperCase() || 'TRƯỜNG THCS ...'}</p><p>TỔ KHXH - NHÓM NGỮ VĂN</p></div>
+            <div><p className="font-bold">{schoolName?.toUpperCase() || 'TRƯỜNG TIỂU HỌC ...'}</p><p>TỔ NGOẠI NGỮ</p></div>
             <div className="text-right"><p>NĂM HỌC 2025-2026</p><p className="italic">{LOAI_DE.find(l => l.id === generatedExam.examType)?.ten}</p></div>
           </div>
           <div className="text-center mb-6">
@@ -5892,8 +5898,8 @@ const ClassReport = ({ items, selectedClass, teacherName, schoolName }) => {
 
       <div id="class-report" className="bg-white rounded-xl p-6 border">
         <div className="text-center mb-4">
-          <p className="font-bold text-sm">{schoolName || 'TRƯỜNG THCS ...'}</p>
-          <p className="text-xs">Tổ Ngữ văn</p>
+          <p className="font-bold text-sm">{schoolName || 'TRƯỜNG TIỂU HỌC ...'}</p>
+          <p className="text-xs">Tổ Tiếng Anh</p>
           <h2 className="text-2xl font-bold mt-2">BÁO CÁO TỔNG HỢP KẾT QUẢ CHẤM BÀI</h2>
           <p className="text-sm italic">Lớp {reportGrade} • {periodText} • Ngày lập: {now.toLocaleDateString('vi-VN')}</p>
         </div>
@@ -6054,15 +6060,15 @@ const ParentFeedback = ({ items, teacherName, schoolName }) => {
 
           <div id="parent-feedback" className="bg-white rounded-xl p-6 border max-w-3xl mx-auto">
             <div className="flex justify-between text-xs mb-4">
-              <div><p className="font-bold">{schoolName || 'TRƯỜNG THCS ...'}</p><p>Tổ Ngữ văn</p></div>
+              <div><p className="font-bold">{schoolName || 'TRƯỜNG TIỂU HỌC ...'}</p><p>Tổ Tiếng Anh</p></div>
               <div className="text-right"><p className="italic">Ngày {now.getDate()} tháng {now.getMonth()+1} năm {now.getFullYear()}</p></div>
             </div>
             <h1 className="text-center text-xl font-bold uppercase mb-1">Phiếu thông báo kết quả học tập</h1>
-            <p className="text-center italic text-sm mb-4">Môn: Ngữ văn • Lớp {item.grade}</p>
+            <p className="text-center italic text-sm mb-4">Môn: Tiếng Anh • Lớp {item.grade}</p>
 
             <section className="mb-3">
               <p><strong>Kính gửi:</strong> {parentName || 'Quý phụ huynh'} của em <strong>{item.studentName || '...'}</strong></p>
-              <p>Giáo viên bộ môn Ngữ văn xin thông báo kết quả bài làm của em như sau:</p>
+              <p>Giáo viên bộ môn Tiếng Anh xin thông báo kết quả bài làm của em như sau:</p>
             </section>
 
             <section className="mb-3">
@@ -6337,7 +6343,7 @@ const GradingModal = ({ item, data, setData, selectedClass, selectedBook, teache
           {/* Preview xuất file */}
           <div id={'grading-preview-' + form.id} className="bg-white p-8 border rounded-lg" style={{ fontFamily: 'Times New Roman, serif', display: showPreview ? 'block' : 'none' }}>
             <div className="grid grid-cols-2 gap-4 text-sm mb-4">
-              <div><p className="font-bold">{schoolName?.toUpperCase() || 'TRƯỜNG THCS ...'}</p><p>TỔ NGỮ VĂN</p><p className="italic">Giáo viên: {teacherName || '...'}</p></div>
+              <div><p className="font-bold">{schoolName?.toUpperCase() || 'TRƯỜNG TIỂU HỌC ...'}</p><p>TỔ TIẾNG ANH</p><p className="italic">Giáo viên: {teacherName || '...'}</p></div>
               <div className="text-right"><p>NĂM HỌC 2025-2026</p><p>Ngày: {new Date(form.createdAt).toLocaleDateString('vi-VN')}</p></div>
             </div>
             <h1 className="text-xl font-bold text-center uppercase mb-2">PHIẾU CHẤM BÀI VÀ NHẬN XÉT</h1>
@@ -6536,9 +6542,9 @@ const LibraryTab = ({ setActive }) => {
 
       // 📝 BÀI GIẢNG (15 bài)
       { id: 31, name: '📝 Giáo án: Lớp 3 - Unit 5 Our Family', size: '220 KB', uploadedAt: '2026-04-21', content: 'Giáo án chi tiết Unit 5: Our Family dành cho lớp 3. Bao gồm: Mục tiêu, từ vựng, mẫu câu, phương pháp dạy, hoạt động lớp...' },
-      { id: 32, name: '📝 Phương pháp: Dạy đọc hiểu văn bản', size: '180 KB', uploadedAt: '2026-04-21', content: 'Hướng dẫn chi tiết các phương pháp dạy đọc hiểu văn bản cho học sinh THCS...' },
+      { id: 32, name: '📝 Phương pháp: Dạy kỹ năng nghe nói Tiếng Anh', size: '180 KB', uploadedAt: '2026-04-21', content: 'Hướng dẫn chi tiết các phương pháp dạy kỹ năng nghe nói cho học sinh Tiểu học...' },
       { id: 33, name: '📝 Giáo án: Lớp 7 - Phân tích tác phẩm', size: '210 KB', uploadedAt: '2026-04-21', content: 'Giáo án dạy phân tích tác phẩm văn học cho lớp 7. Hướng dẫn chi tiết từng bước...' },
-      { id: 34, name: '📝 Kế hoạch: Chương trình năm học', size: '160 KB', uploadedAt: '2026-04-21', content: 'Kế hoạch giảng dạy toàn năm cho môn Văn THCS. Bao gồm phân phối chương trình và mục tiêu mỗi học kỳ...' },
+      { id: 34, name: '📝 Kế hoạch: Chương trình năm học', size: '160 KB', uploadedAt: '2026-04-21', content: 'Kế hoạch giảng dạy toàn năm cho môn Tiếng Anh Tiểu học. Bao gồm phân phối chương trình và mục tiêu mỗi học kỳ...' },
       { id: 35, name: '📝 Hoạt động: Trò chơi trong lớp học', size: '140 KB', uploadedAt: '2026-04-21', content: 'Các hoạt động trò chơi giáo dục để tăng hứng thú học tập cho học sinh...' },
       { id: 36, name: '📝 Giáo án: Lớp 8 - Viết mô tả', size: '190 KB', uploadedAt: '2026-04-21', content: 'Giáo án dạy kỹ năng viết mô tả cho lớp 8. Hướng dẫn chi tiết cấu trúc và cách viết...' },
       { id: 37, name: '📝 Đánh giá: Rubric chấm bài viết', size: '130 KB', uploadedAt: '2026-04-21', content: 'Tiêu chí chi tiết để đánh giá bài viết của học sinh. Bao gồm nội dung, cấu trúc, ngữ pháp...' },
@@ -6857,7 +6863,7 @@ const ZaloSettingsView = ({ data, setData }) => {
                   value={newGroupName}
                   onChange={e => setNewGroupName(e.target.value)}
                   onKeyPress={e => e.key === 'Enter' && handleAddGroup()}
-                  placeholder="Tên nhóm mới (VD: Ngữ Văn 7A1)"
+                  placeholder="Tên nhóm mới (VD: Tiếng Anh 3A1)"
                   className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
                 />
                 <button
@@ -7458,7 +7464,7 @@ const ClassModal = ({ item, data, setData, onClose }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div><label className="block text-sm font-medium mb-1">Tên lớp *</label><input value={form.name} onChange={e=>setForm({...form,name:e.target.value})} placeholder="VD: 8A1" className="w-full px-3 py-2 border rounded-lg"/></div>
             <div><label className="block text-sm font-medium mb-1">Khối</label><select value={form.grade} onChange={e=>setForm({...form,grade:Number(e.target.value)})} className="w-full px-3 py-2 border rounded-lg bg-white">{[1,2,3,4,5].map(c=><option key={c} value={c}>Lớp {c}</option>)}</select></div>
-            <div><label className="block text-sm font-medium mb-1">Tên nhóm Zalo lớp</label><input value={form.zaloGroupName||''} onChange={e=>setForm({...form,zaloGroupName:e.target.value})} placeholder="VD: Ngữ Văn 8A1 - Cô Lan" className="w-full px-3 py-2 border rounded-lg"/></div>
+            <div><label className="block text-sm font-medium mb-1">Tên nhóm Zalo lớp</label><input value={form.zaloGroupName||''} onChange={e=>setForm({...form,zaloGroupName:e.target.value})} placeholder="VD: Tiếng Anh 4A1 - Thầy Đức" className="w-full px-3 py-2 border rounded-lg"/></div>
             <div><label className="block text-sm font-medium mb-1">Link nhóm Zalo (tùy chọn)</label><input value={form.zaloGroupLink||''} onChange={e=>setForm({...form,zaloGroupLink:e.target.value})} placeholder="https://zalo.me/g/..." className="w-full px-3 py-2 border rounded-lg"/></div>
           </div>
 
@@ -8451,8 +8457,8 @@ const ClassAssignmentReport = ({ data, classes, assignments, submissions, teache
       {cls && (
         <div id="class-assignment-report" className="bg-white rounded-xl p-6 border space-y-4">
           <div className="text-center mb-4">
-            <p className="font-bold text-sm">{schoolName || 'TRƯỜNG THCS ...'}</p>
-            <p className="text-xs">Tổ Ngữ văn</p>
+            <p className="font-bold text-sm">{schoolName || 'TRƯỜNG TIỂU HỌC ...'}</p>
+            <p className="text-xs">Tổ Tiếng Anh</p>
             <h2 className="text-2xl font-bold mt-2">BÁO CÁO BÀI TẬP - {cls.name}</h2>
             <p className="text-sm italic">GV: {teacherName || '—'} • Ngày: {new Date().toLocaleDateString('vi-VN')}</p>
           </div>
@@ -9246,7 +9252,7 @@ IMPORTANT: Chỉ trả JSON, không có text khác!`;
 const executeWorkflow = async (intent, data, setData, selectedClass, selectedBook) => {
   if (intent.action === 'create_lesson') {
     // Auto tạo kế hoạch bài + giáo án bằng Claude
-    const prompt = `Hãy soạn một kế hoạch bài giảng CHI TIẾT VÀ CHUYÊN NGHIỆP cho bài "${intent.lesson_name}" dạy cho lớp ${intent.grade || selectedClass} (Tiếng Việt THCS):
+    const prompt = `Hãy soạn một kế hoạch bài giảng CHI TIẾT VÀ CHUYÊN NGHIỆP cho bài "${intent.lesson_name}" dạy cho lớp ${intent.grade || selectedClass} (Tiếng Anh Tiểu học):
 
 **I. MỤC TIÊU BÀI HỌC** (3-5 mục tiêu cụ thể)
 - Mục tiêu về kiến thức
@@ -9276,7 +9282,7 @@ const executeWorkflow = async (intent, data, setData, selectedClass, selectedBoo
 
 **VI. RÚT KINH NGHIỆM VÀ CÂU HỎI MỞ RỘNG**
 
-Hãy viết chi tiết, cụ thể, phù hợp với chương trình THCS, dễ áp dụng thực tế. Sử dụng tiếng Việt chuyên nghiệp.`;
+Hãy viết chi tiết, cụ thể, phù hợp với chương trình Tiểu học, dễ áp dụng thực tế. Sử dụng tiếng Việt chuyên nghiệp.`;
 
     const result = await callClaudeAPI(prompt, 2000);
     if (result.success) {
@@ -9317,7 +9323,7 @@ const parseSlashCommand = (input) => {
 };
 
 const generateLessonContent = async (topic) => {
-  const prompt = `Hãy soạn một bài giảng tiếng Việt THCS chi tiết về chủ đề "${topic}".
+  const prompt = `Hãy soạn một bài giảng Tiếng Anh Tiểu học chi tiết về chủ đề "${topic}".
 Cấu trúc:
 1. Mục tiêu bài học
 2. Khởi động (5 phút)
@@ -9348,7 +9354,7 @@ const generateExamContent = async (topic, type, count) => {
   const qTypeText = isEssayOnly
     ? 'Tất cả câu hỏi phần Đọc hiểu là dạng TỰ LUẬN (học sinh tự viết câu trả lời), KHÔNG dùng trắc nghiệm.'
     : 'Các câu hỏi phần Đọc hiểu là trắc nghiệm 4 lựa chọn A/B/C/D (viết rõ 4 phương án ngay dưới mỗi câu, nêu đáp án đúng trong phần đáp án).';
-  const prompt = `Bạn là giáo viên Ngữ văn THCS chuyên nghiệp. Hãy soạn đề kiểm tra ${count} câu Đọc hiểu về chủ đề "${topic}", theo chuẩn GDPT 2018 gồm PHẦN I. ĐỌC HIỂU và PHẦN II. VIẾT (1 đề bài viết đoạn/bài văn liên quan chủ đề).
+  const prompt = `Bạn là giáo viên Tiếng Anh Tiểu học chuyên nghiệp. Hãy soạn đề kiểm tra ${count} câu Ngữ pháp/Từ vựng/Đọc hiểu về chủ đề "${topic}", theo chuẩn GDPT 2018 gồm PHẦN I. NGỮ PHÁP-TỪ VỰNG-ĐỌC HIỂU và PHẦN II. VIẾT (1 đề bài viết đoạn văn ngắn liên quan chủ đề).
 ${qTypeText}
 
 ĐỊNH DẠNG TRẢ LỜI (viết đúng 2 dấu mốc dưới đây, không dùng markdown, không dùng JSON):
@@ -9385,7 +9391,7 @@ Trả lời bằng tiếng Việt, chuyên nghiệp.`;
 };
 
 const generateOutlineContent = async (topic) => {
-  const prompt = `Hãy tạo một outline/kế hoạch bài dạy chi tiết cho bài "${topic}" (Tiếng Việt THCS).
+  const prompt = `Hãy tạo một outline/kế hoạch bài dạy chi tiết cho bài "${topic}" (Tiếng Anh Tiểu học).
 Gồm:
 1. Mục tiêu kiến thức
 2. Mục tiêu kỹ năng
@@ -9419,7 +9425,7 @@ Mỗi hoạt động gồm:
 - Thời gian (phút)
 - Đánh giá kết quả
 
-Trả lời bằng tiếng Việt, sáng tạo, phù hợp với học sinh THCS.`;
+Trả lời bằng tiếng Việt, sáng tạo, phù hợp với học sinh Tiểu học.`;
 
   let result = null;
   const useOllama = getUseOllama();
@@ -9436,7 +9442,7 @@ Trả lời bằng tiếng Việt, sáng tạo, phù hợp với học sinh THCS
 };
 
 const gradeEssayAI = async (content, topic) => {
-  const prompt = `Hãy chấm điểm bài viết sau (tiếng Việt THCS) về chủ đề "${topic}".
+  const prompt = `Hãy chấm điểm bài viết Tiếng Anh sau (học sinh Tiểu học) về chủ đề "${topic}".
 Tiêu chí:
 1. Nội dung (5 điểm): Nắm rõ chủ đề, đúng sự thật
 2. Cấu trúc (3 điểm): Mở bài, thân bài, kết bài
@@ -9526,7 +9532,7 @@ Ví dụ: "Giải thích khái niệm...", "Gợi ý tiêu đề bài...", v.v.
               lessonName: args,
               duration: '2 tiết',
               mucTieu: `**1. Kiến thức:** Hiểu nội dung, nghệ thuật tác phẩm "${args}".\n**2. Năng lực:** Phân tích, thuyết trình, tư duy phê bình.\n**3. Phẩm chất:** Yêu thích văn học, trách nhiệm học tập.`,
-              thietBi: '- SGK Ngữ Văn - Máy chiếu - Phiếu học tập - Video minh họa',
+              thietBi: '- SGK Global Success - Máy chiếu - Phiếu học tập - Tranh ảnh minh họa - Loa/audio',
               hoatDong1: `**HĐ1: MỞ ĐẦU (5p)**\nMục tiêu: Tạo hứng thú\nNội dung: Giới thiệu về "${args}"`,
               hoatDong2: `**HĐ2: HÌNH THÀNH KIẾN THỨC (20p)**\n${result.text.substring(0, 500)}...`,
               hoatDong3: '**HĐ3: LUYỆN TẬP (10p)**\nTrò chơi, tranh luận về tác phẩm',
@@ -10096,7 +10102,7 @@ const OcGrade = ({ cls, asg, sub, onBack }) => {
       return;
     }
     setGrading(true);
-    const prompt=`Bạn là giáo viên Ngữ văn THCS. Hãy CHẤM bài làm học sinh theo đề. Trả lời tiếng Việt.\n\n=== ĐỀ ===\n${asg.body}\n\n=== BÀI LÀM (phần gõ chữ) ===\n${sub.answer||'(học sinh không gõ chữ)'}\n${hasImages?'\n⚠️ Học sinh nộp bài bằng ẢNH CHỤP BÀI VIẾT TAY đính kèm bên dưới. Hãy ĐỌC KỸ chữ viết tay trong ảnh (đây mới là bài làm chính) rồi chấm theo đề. Nếu phần gõ chữ trống thì hoàn toàn dựa vào ảnh.\n':''}\nCho ĐIỂM thang 10 và NHẬN XÉT ngắn gọn cụ thể, giọng động viên (nêu nội dung em đã viết được).\nĐỊNH DẠNG JSON thuần (không markdown): {"diem": <số 0-10>, "nhanxet": "..."}`;
+    const prompt=`Bạn là giáo viên Tiếng Anh Tiểu học tại Việt Nam (bộ Global Success). Hãy CHẤM bài làm học sinh theo đề. Trả lời tiếng Việt.\n\n=== ĐỀ ===\n${asg.body}\n\n=== BÀI LÀM (phần gõ chữ) ===\n${sub.answer||'(học sinh không gõ chữ)'}\n${hasImages?'\n⚠️ Học sinh nộp bài bằng ẢNH CHỤP BÀI VIẾT TAY đính kèm bên dưới. Hãy ĐỌC KỸ chữ viết tay trong ảnh (đây mới là bài làm chính) rồi chấm theo đề. Nếu phần gõ chữ trống thì hoàn toàn dựa vào ảnh.\n':''}\nHọc sinh Tiểu học nên chỉ cần câu đơn giản, đúng cấu trúc cơ bản. Xem xét Ngữ pháp, Từ vựng, Nội dung.\nCho ĐIỂM thang 10 và NHẬN XÉT ngắn gọn cụ thể, giọng động viên (nêu nội dung em đã viết được).\nĐỊNH DẠNG JSON thuần (không markdown): {"diem": <số 0-10>, "nhanxet": "..."}`;
     const r = hasImages ? await callClaudeVisionAPI(prompt, sub.images, 1400) : await callGroqAPI(prompt, 1200);
     setGrading(false);
     if (r.error){alert('Lỗi AI: '+r.error);return;}
