@@ -40,7 +40,7 @@
     --c-ink: #4a2530;          /* Nâu mận ấm */
     --c-ink-soft: #6a4552;
     --c-border: #f0dcd0;
-    --app-fs: 17px;            /* 🔠 Cỡ chữ do cô Thu tự chỉnh (nút "Aa" trên thanh trên) */
+    --app-fs: 17px;            /* 🔠 Cỡ chữ do Cô Hường tự chỉnh (nút "Aa" trên thanh trên) */
   }
   * { box-sizing: border-box; }
   html { font-size: var(--app-fs); }
@@ -54,7 +54,7 @@
   h1, h2, h3, h4 { font-family: 'Playfair Display', 'Be Vietnam Pro', serif; letter-spacing: -0.01em; }
   .font-display { font-family: 'Playfair Display', serif; }
 
-  /* 🔍 Chữ dễ đọc hơn: tăng nhẹ cỡ chữ nhỏ + làm đậm màu chữ mờ (theo yêu cầu cô Thu) */
+  /* 🔍 Chữ dễ đọc hơn: tăng nhẹ cỡ chữ nhỏ + làm đậm màu chữ mờ (theo yêu cầu Cô Hường) */
   .text-xs { font-size: 0.8125rem !important; line-height: 1.25rem !important; }
   .text-sm { font-size: 0.9375rem !important; line-height: 1.45rem !important; }
   [class*="text-[8px]"], [class*="text-[9px]"], [class*="text-[10px]"], [class*="text-[11px]"], [class*="text-[12px]"] { font-size: 0.75rem !important; }
@@ -288,14 +288,21 @@ const { useState, useEffect, useRef } = React;
 
 // ============== DỮ LIỆU CHƯƠNG TRÌNH ==============
 const SACH_GIAO_KHOA = [
-  { id: 'global_success', ten: 'Global Success (Tiếng Anh)', nxb: 'NXB Giáo dục Việt Nam' },
+  { id: 'global_success_1', ten: 'Tiếng Anh 1 - Global Success', grade: 1, nxb: 'NXB Giáo dục Việt Nam' },
+  { id: 'global_success_2', ten: 'Tiếng Anh 2 - Global Success', grade: 2, nxb: 'NXB Giáo dục Việt Nam' },
+  { id: 'global_success_3', ten: 'Tiếng Anh 3 - Global Success', grade: 3, nxb: 'NXB Giáo dục Việt Nam' },
+  { id: 'global_success_4', ten: 'Tiếng Anh 4 - Global Success', grade: 4, nxb: 'NXB Giáo dục Việt Nam' },
+  { id: 'global_success_5', ten: 'Tiếng Anh 5 - Global Success', grade: 5, nxb: 'NXB Giáo dục Việt Nam' },
 ];
+// ⚠️ LƯU Ý: Danh sách chủ đề dưới đây là bộ chủ đề Tiếng Anh Tiểu học phổ biến do hệ thống tự soạn
+// làm khung tham khảo ban đầu — CHƯA đối chiếu từng bài với đúng thứ tự Unit trong SGK Global Success
+// bản in cô đang dạy. Cô nên vào "Ngân hàng bài tập" → sửa/bổ sung lại đúng tên Unit theo SGK thật.
 const CHU_DE_THEO_LOP = {
-  1: ['Colors','Numbers 1-10','My Family','Animals','My School','My Body','Food and Drinks','Toys','Weather','Feelings'],
-  2: ['Greetings','My Family','My House','Animals','Days of the Week','My School Things','Free Time','Food','My Body','Weather'],
-  3: ['My Friends','My School','Numbers','Colors and Shapes','My Family','Animals','Free Time Activities','Food and Drinks','My House','Seasons'],
-  4: ['My Hobbies','My Neighbourhood','My House','Special Occasions','Food and Drinks','Time','Health','My Free Time','School Subjects','Nature'],
-  5: ['My Friends','My School','My Family','My House','My Neighbourhood','My Hobbies','My Health','Free Time','Wonders of Viet Nam','Then and Now'],
+  1: ['Hello','Colors','Numbers 1-10','My Family','My Body','My Toys','Animals (Pets)','Food and Drinks','My School','My Classroom','Shapes','Weather','My House','Feelings','Animals (Farm)','Clothes','Actions (Verbs)','Fruit','Seasons','Goodbye and Review'],
+  2: ['Greetings','My Family','My House','My Body','Animals (Pets)','Days of the Week','My School Things','Free Time Activities','Food and Drinks','My Body (Health)','Weather','Numbers 1-20','My Classroom','Animals (Zoo)','Colors and Shapes','My Toys','Actions','Clothes','My Friends','Review and Goodbye'],
+  3: ['Hello','My Friends','My School','Numbers','Colors and Shapes','My Family','My House','My Body','Animals','Free Time Activities','Food and Drinks','My Toys','Seasons and Weather','My Neighbourhood','My Classroom','Daily Routines','Feelings','Sports and Games','Special Occasions (Tet)','Review and Goodbye'],
+  4: ['My New School','My Friends','My Timetable','My Family','My House','Free Time Activities','My Hobbies','My Neighbourhood','My Village or City','Special Occasions','Food and Drinks','Health','Jobs and Occupations','My Future','School Subjects','Time','Nature','Toys','Sports','Review and Goodbye'],
+  5: ['My Friends','My New School','My Timetable','My Family','My House','My Neighbourhood','My Hobbies','My Health','Free Time (What Will You Be)','Our Community','Nature (Wonders of Viet Nam)','Then and Now','Jobs','Travel','Weather and Seasons','Festivals','School Life','Environment','Technology','Review and Goodbye'],
 };
 const NANG_LUC_DAC_THU = ['Năng lực ngôn ngữ (nghe, nói, đọc, viết)', 'Năng lực giao tiếp bằng Tiếng Anh cơ bản'];
 const NANG_LUC_CHUNG = ['Tự chủ và tự học', 'Giao tiếp và hợp tác', 'Giải quyết vấn đề và sáng tạo'];
@@ -531,6 +538,74 @@ const PASSAGES_BANK = [
     excerpt: 'A: What do you like doing in your free time? B: I like...',
     fullText: 'A: What do you like doing in your free time?\nB: I like playing football. What about you?\nA: I like reading books. Do you like reading, too?\nB: No, I don\'t. I prefer sports.',
   },
+  // ── BỔ SUNG: Lớp 1 — còn thiếu Ngữ pháp / Viết / Nói ────────────────
+  {
+    id: 'GRA_1_001', title: 'This is / These are', author: 'Soạn bởi giáo viên', source: 'Ghi chú ngữ pháp tự soạn',
+    class: 1, genre: 'grammar', subgenre: 'diem_ngu_phap', theme: 'do_vat', difficulty: 'de',
+    copyright_status: 'original', approved: true, wordCount: 10,
+    excerpt: 'This is a book. These are pens...',
+    fullText: 'This is a/an + danh từ số ít (This is a book.)\nThese are + danh từ số nhiều (These are pens.)\n\nDùng "a" trước phụ âm, "an" trước nguyên âm (a book, an apple).',
+  },
+  {
+    id: 'WRI_1_001', title: 'Viết tên đồ vật theo tranh', author: 'Soạn bởi giáo viên', source: 'Đề Viết mẫu tự soạn',
+    class: 1, genre: 'writing', subgenre: 'de_bai_mau', theme: 'do_vat', difficulty: 'de',
+    copyright_status: 'original', approved: true, wordCount: 10,
+    excerpt: 'Look at the pictures. Write the words...',
+    fullText: 'Look at the pictures. Write the correct words: book, pen, bag, ruler, chair. (Nhìn tranh, viết đúng tên đồ vật vào chỗ trống.)',
+  },
+  {
+    id: 'SPK_1_001', title: 'Hỏi tên đồ vật', author: 'Soạn bởi giáo viên', source: 'Mẫu hội thoại tự soạn',
+    class: 1, genre: 'speaking', subgenre: 'hoi_thoai_mau', theme: 'do_vat', difficulty: 'de',
+    copyright_status: 'original', approved: true, wordCount: 12,
+    excerpt: 'A: What is this? B: It is a book.',
+    fullText: 'A: What is this?\nB: It is a book.\nA: What is that?\nB: It is a pen.',
+  },
+  // ── BỔ SUNG: Lớp 2 — còn thiếu Viết ──────────────────────────────────
+  {
+    id: 'WRI_2_001', title: 'Giới thiệu gia đình', author: 'Soạn bởi giáo viên', source: 'Đề Viết mẫu tự soạn',
+    class: 2, genre: 'writing', subgenre: 'de_bai_mau', theme: 'gia_dinh', difficulty: 'de',
+    copyright_status: 'original', approved: true, wordCount: 12,
+    excerpt: 'Write 2-3 sentences about your family...',
+    fullText: 'Write 2-3 sentences about your family. Use these words to help you: father, mother, brother, sister.',
+  },
+  // ── BỔ SUNG: Lớp 3 — còn thiếu Nói ───────────────────────────────────
+  {
+    id: 'SPK_3_001', title: 'Hỏi tuổi và lớp học', author: 'Soạn bởi giáo viên', source: 'Mẫu hội thoại tự soạn',
+    class: 3, genre: 'speaking', subgenre: 'hoi_thoai_mau', theme: 'ban_than', difficulty: 'de',
+    copyright_status: 'original', approved: true, wordCount: 20,
+    excerpt: 'A: How old are you? B: I am nine years old...',
+    fullText: 'A: How old are you?\nB: I am nine years old.\nA: What class are you in?\nB: I am in class 3A.',
+  },
+  // ── BỔ SUNG: Lớp 4 — thêm Đọc hiểu, Từ vựng ──────────────────────────
+  {
+    id: 'RD_4_003', title: 'My Timetable', author: 'Soạn bởi giáo viên', source: 'Bài đọc mẫu tự soạn',
+    class: 4, genre: 'reading', subgenre: 'doan_van_ngan', theme: 'truong_hoc', difficulty: 'vua',
+    copyright_status: 'original', approved: true, wordCount: 45,
+    excerpt: 'On Monday, I have Math, English, and Science...',
+    fullText: 'On Monday, I have Math, English, and Science. On Tuesday, I have Art and Music. I like Tuesday best because I love drawing. After school, I do my homework and then play with my friends.',
+  },
+  {
+    id: 'VOC_4_002', title: 'Jobs and Occupations', author: 'Soạn bởi giáo viên', source: 'Danh sách từ vựng tự soạn',
+    class: 4, genre: 'vocabulary', subgenre: 'tu_vung_chu_de', theme: 'nghe_nghiep', difficulty: 'vua',
+    copyright_status: 'original', approved: true, wordCount: 10,
+    excerpt: 'teacher, doctor, farmer, driver...',
+    fullText: 'teacher (giáo viên), doctor (bác sĩ), farmer (nông dân), driver (tài xế), nurse (y tá), engineer (kỹ sư), cook (đầu bếp), singer (ca sĩ), worker (công nhân), pilot (phi công)',
+  },
+  // ── BỔ SUNG: Lớp 5 — còn thiếu Nói ───────────────────────────────────
+  {
+    id: 'SPK_5_001', title: 'Nói về dự định tương lai', author: 'Soạn bởi giáo viên', source: 'Mẫu hội thoại tự soạn',
+    class: 5, genre: 'speaking', subgenre: 'hoi_thoai_mau', theme: 'nghe_nghiep', difficulty: 'kho',
+    copyright_status: 'original', approved: true, wordCount: 25,
+    excerpt: 'A: What will you be in the future? B: I will be a teacher...',
+    fullText: 'A: What will you be in the future?\nB: I will be a teacher. What about you?\nA: I will be a doctor. I want to help sick people.',
+  },
+  {
+    id: 'VOC_5_002', title: 'Environment', author: 'Soạn bởi giáo viên', source: 'Danh sách từ vựng tự soạn',
+    class: 5, genre: 'vocabulary', subgenre: 'tu_vung_chu_de', theme: 'moi_truong', difficulty: 'kho',
+    copyright_status: 'original', approved: true, wordCount: 10,
+    excerpt: 'pollution, recycle, protect, planet...',
+    fullText: 'pollution (ô nhiễm), recycle (tái chế), protect (bảo vệ), planet (hành tinh), plant trees (trồng cây), save water (tiết kiệm nước), rubbish (rác), clean (sạch sẽ), dirty (bẩn), environment (môi trường)',
+  },
 ];
 
 const THEMES = {
@@ -551,6 +626,9 @@ const THEMES = {
   thoi_quen: 'Thói quen (Habits)',
   so_sanh: 'So sánh (Comparisons)',
   ban_than: 'Bản thân (About Me)',
+  do_vat: 'Đồ vật (Things & School Objects)',
+  nghe_nghiep: 'Nghề nghiệp (Jobs)',
+  moi_truong: 'Môi trường (Environment)',
 };
 
 // ============== PHASE 3: TIÊU CHÍ CHẤM BÀI (VIẾT TIẾNG ANH) ==============
@@ -1541,7 +1619,7 @@ const Sidebar = ({ active, setActive, collapsed, setCollapsed, onChatOpen, mobil
           <div className="flex items-center gap-2.5 px-1">
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-rose-200 to-amber-200 flex items-center justify-center text-[15px] shadow-sm">🌸</div>
             <div>
-              <p className="text-rose-900 font-semibold text-[12px]">Chào cô Thu</p>
+              <p className="text-rose-900 font-semibold text-[12px]">Chào Cô Hường</p>
               <p className="text-[10px] text-rose-400 italic">Một ngày dạy học an yên</p>
             </div>
           </div>
@@ -1654,7 +1732,7 @@ const MobileTabBar = ({ active, setActive, lastComposeTab }) => {
   );
 };
 
-// ============== 🔠 CỠ CHỮ & ĐỘ ĐẬM NHẠT (cô Thu tự chỉnh, lưu trên máy) ==============
+// ============== 🔠 CỠ CHỮ & ĐỘ ĐẬM NHẠT (Cô Hường tự chỉnh, lưu trên máy) ==============
 const FONT_SIZE_KEY = 'tro_ly_gv_font_size';
 const TEXT_BOLD_KEY = 'tro_ly_gv_text_bold';
 const FONT_SIZE_DEFAULT = 17, FONT_SIZE_MIN = 14, FONT_SIZE_MAX = 24;
@@ -2314,7 +2392,7 @@ const Dashboard = ({ data, setData, setActive, fbUser, onSignOut }) => {
           style={{background:'linear-gradient(135deg,#be185d,#ec4899)'}}>🌐</div>
         <div>
           <h1 className="text-xl font-bold font-display" style={{color:'#9f1239'}}>Lớp Học Kết Nối</h1>
-          <p className="text-xs" style={{color:'var(--c-ink-soft)'}}>Chào cô Thu · {dateStr}</p>
+          <p className="text-xs" style={{color:'var(--c-ink-soft)'}}>Chào Cô Hường · {dateStr}</p>
         </div>
         {fbUser && <button onClick={onSignOut}
           className="ml-auto px-3 py-1.5 rounded-xl text-xs font-medium border border-rose-200 text-rose-500 hover:bg-rose-50 transition">
@@ -2372,7 +2450,7 @@ const Dashboard = ({ data, setData, setActive, fbUser, onSignOut }) => {
           style={{background:'linear-gradient(135deg,#be185d,#ec4899)'}}>🌐</div>
         <div>
           <h1 className="text-lg md:text-xl font-bold font-display" style={{color:'#9f1239'}}>Lớp Học Kết Nối</h1>
-          <p className="text-[11px]" style={{color:'var(--c-ink-soft)'}}>Chào cô Thu · {dateStr}</p>
+          <p className="text-[11px]" style={{color:'var(--c-ink-soft)'}}>Chào Cô Hường · {dateStr}</p>
         </div>
         <div className="ml-auto flex items-center gap-2">
           <button onClick={() => setShowAddClass(true)}
@@ -2426,16 +2504,16 @@ const Dashboard = ({ data, setData, setActive, fbUser, onSignOut }) => {
         </div>
       )}
 
-      {/* Link "Học Cùng Cô Thu" — chia sẻ cho học sinh */}
+      {/* Link "Học Cùng Cô Hường" — chia sẻ cho học sinh */}
       <div className="soft-card p-3 mb-3 flex items-center gap-3">
         <div className="w-9 h-9 rounded-xl flex items-center justify-center text-lg text-white shrink-0" style={{background:'linear-gradient(135deg,#0f766e,#be185d)'}}>🎒</div>
         <div className="flex-1 min-w-0">
-          <p className="text-xs font-semibold text-rose-900">Học Cùng Cô Thu</p>
+          <p className="text-xs font-semibold text-rose-900">Học Cùng Cô Hường</p>
           <p className="text-[10px] truncate" style={{color:'var(--c-ink-soft)'}}>trolygiaovien.netlify.app/cong</p>
         </div>
         <button onClick={() => {
           const url = 'https://trolygiaovien.netlify.app/cong';
-          if (navigator.share) navigator.share({ title: 'Học Cùng Cô Thu', text: 'Vào lớp làm bài, xem điểm, trò chuyện với cô 🌸', url }).catch(() => {});
+          if (navigator.share) navigator.share({ title: 'Học Cùng Cô Hường', text: 'Vào lớp làm bài, xem điểm, trò chuyện với cô 🌸', url }).catch(() => {});
           else { navigator.clipboard.writeText(url).then(() => alert('Đã copy link!\nGửi link này cho học sinh để vào lớp.')).catch(() => {}); }
         }} className="btn-primary px-3 py-1.5 rounded-xl text-[10px] font-medium shrink-0 flex items-center gap-1">
           📤 Chia sẻ
@@ -2866,7 +2944,7 @@ const LessonModal = ({ subTab, item, data, setData, selectedClass, selectedBook,
   const generate = () => {
     const chuDe = form.theme || (CHU_DE_THEO_LOP[form.grade] || [])[0] || 'Chủ đề';
     setForm({ ...form, title: form.title || `Giáo án: ${form.lessonName || chuDe} - Lớp ${form.grade}`,
-      mucTieu: `**1. Kiến thức:** Hiểu nội dung, nghệ thuật văn bản.\n**2. Năng lực:** ${NANG_LUC_DAC_THU.join('; ')}.\n**3. Phẩm chất:** ${PHAM_CHAT.join('; ')}.`,
+      mucTieu: `**1. Kiến thức:** Nắm được từ vựng và mẫu câu trọng tâm của bài.\n**2. Năng lực:** ${NANG_LUC_DAC_THU.join('; ')}.\n**3. Phẩm chất:** ${PHAM_CHAT.join('; ')}.`,
       thietBi: `- SGK ${SACH_GIAO_KHOA.find(b => b.id === form.book)?.ten} - Lớp ${form.grade}\n- Máy chiếu, phiếu học tập, tranh ảnh/audio minh họa.`,
       hoatDong1: `**HĐ1: MỞ ĐẦU (5p)**\nMục tiêu: Tạo hứng thú.\nNội dung: Xem video/tranh về "${chuDe}".`,
       hoatDong2: `**HĐ2: HÌNH THÀNH KIẾN THỨC (30p)**\nNV1: Tác giả, tác phẩm. NV2: Đọc-hiểu. NV3: Tổng kết.`,
@@ -3809,7 +3887,7 @@ Chú ý: Câu hỏi Phần I (Ngữ pháp/Từ vựng/Đọc hiểu) nên bám s
               <div className="bg-rose-50 p-4 rounded-xl border border-rose-200">
                 <h4 className="font-bold mb-3 flex items-center gap-2 text-rose-800"><Icon name="BookOpen" size={16} /> 📚 Ngữ liệu PHẦN II — Câu 2 NLVH (ngoài SGK, trọng tâm lớp 9, ≤600 chữ)</h4>
                 <div className="mb-2">
-                  <label className="block text-sm font-medium mb-1">Chọn từ kho văn học</label>
+                  <label className="block text-sm font-medium mb-1">Chọn từ Ngân hàng bài tập</label>
                   <select onChange={e => { const p = allPassages.find(x => x.id === e.target.value); if (p) setForm({ ...form, passageNLVHTitle: p.title, passageNLVHContent: p.fullText || p.content || '', passageNLVHAuthor: p.author || '' }); }} className="w-full px-3 py-2 border rounded-lg bg-white text-sm">
                     <option value="">-- Chọn tác phẩm NLVH --</option>
                     {allPassages.filter(p => p.genre === 'reading' && (p.class >= 8 || !p.class)).map(p => <option key={p.id} value={p.id}>{p.title} — {p.author} {p.class ? `(Lớp ${p.class})` : ''}</option>)}
@@ -4319,50 +4397,11 @@ const AutoUpdateModal = ({ data, setData, onClose }) => {
   const abortRef = React.useRef(false);
   const logRef = React.useRef(null);
 
-  const WIKI_ARTICLES = [
-    ['Rừng nhiệt đới',6,'thong_tin','văn bản khoa học','thiên nhiên - môi trường'],
-    ['Biển Đông',6,'thong_tin','văn bản địa lý','địa lý - biển đảo Việt Nam'],
-    ['Nước',6,'thong_tin','văn bản khoa học','tài nguyên - khoa học tự nhiên'],
-    ['Chất thải nhựa',7,'thong_tin','văn bản khoa học','môi trường - ô nhiễm nhựa'],
-    ['Trí tuệ nhân tạo',7,'thong_tin','văn bản khoa học','công nghệ - AI - tương lai'],
-    ['Biến đổi khí hậu',7,'thong_tin','văn bản khoa học','môi trường - khí hậu toàn cầu'],
-    ['Sức khỏe tâm thần',8,'thong_tin','văn bản khoa học','sức khỏe - tâm lý học sinh'],
-    ['Internet',8,'thong_tin','văn bản khoa học','công nghệ - mạng xã hội - giới trẻ'],
-    ['Ô nhiễm không khí',8,'thong_tin','văn bản khoa học','môi trường - sức khỏe'],
-    ['Đô thị hóa',9,'thong_tin','văn bản xã hội','xã hội - đô thị - nông thôn'],
-    ['Năng lượng tái tạo',9,'thong_tin','văn bản khoa học','năng lượng - môi trường tương lai'],
-    ['Đa dạng sinh học',9,'thong_tin','văn bản khoa học','sinh thái - bảo tồn thiên nhiên'],
-    ['Tình bạn',6,'nghi_luan','nghị luận xã hội','đạo đức - tình bạn - lứa tuổi học sinh'],
-    ['Lòng dũng cảm',7,'nghi_luan','nghị luận xã hội','đạo đức - dũng cảm - nghị lực'],
-    ['Bạo lực học đường',8,'nghi_luan','nghị luận xã hội','xã hội - học đường - an toàn'],
-    ['Văn hóa đọc sách',9,'nghi_luan','nghị luận xã hội','văn hoá đọc - thời đại số'],
-    ['Trách nhiệm xã hội',9,'nghi_luan','nghị luận xã hội','đạo đức - trách nhiệm - cộng đồng'],
-  ];
+  const WIKI_ARTICLES = []; // Đã bỏ ngữ liệu Wikipedia tiếng Việt — không dùng cho môn Tiếng Anh
 
-  const THIVIEN_POEMS = [
-    ['https://www.thivien.net/Tr%E1%BA%A7n-%C4%90%C4%83ng-Khoa/H%E1%BA%A1t-g%E1%BA%A1o-l%C3%A0ng-ta/poem-nj2_l-i_p3wtvvR5ztJaDA','Trần Đăng Khoa',6,'thơ tự do','quê hương - lao động','education_use'],
-    ['https://www.thivien.net/Tr%E1%BA%A7n-%C4%90%C4%83ng-Khoa/Th%E1%BA%A3-di%E1%BB%81u/poem-whocg3pnnLCLP-8dEMogtA','Trần Đăng Khoa',6,'thơ','tuổi thơ - thiên nhiên','education_use'],
-    ['https://www.thivien.net/Tr%E1%BA%A7n-%C4%90%C4%83ng-Khoa/M%C6%B0a/poem-oYyO5oQrmOfinKNpR69gWA','Trần Đăng Khoa',6,'thơ tự do','thiên nhiên - mưa','education_use'],
-    ['https://www.thivien.net/H%E1%BB%93-Ch%C3%AD-Minh/Nguy%C3%AAn-ti%C3%AAu/poem-9nGoTWzYHnMiK0mDAEFGOA','Hồ Chí Minh',6,'thơ Đường luật','thiên nhiên - yêu nước','nha_nuoc'],
-    ['https://www.thivien.net/H%E1%BB%93-Ch%C3%AD-Minh/C%E1%BA%A3nh-khuya/poem-B5-sSkpPOQF-1juwlpUd4g','Hồ Chí Minh',7,'thơ Đường luật','thiên nhiên - tâm trạng chiến sĩ','nha_nuoc'],
-    ['https://www.thivien.net/Xu%C3%A2n-Qu%E1%BB%B3nh/Ti%E1%BA%BFng-g%C3%A0-tr%C6%B0a/poem-kIRTdZoXrUmchgeBvXb_Rg','Xuân Quỳnh',7,'thơ năm chữ','tình gia đình - quê hương - chiến tranh','education_use'],
-    ['https://www.thivien.net/Xu%C3%A2n-Qu%E1%BB%B3nh/Chuy%E1%BB%87n-c%E1%BB%95-t%C3%ADch-v%E1%BB%81-lo%C3%A0i-ng%C6%B0%E1%BB%9Di/poem-AWdnPiisxJrwRbUfp8Rizw','Xuân Quỳnh',7,'thơ','tình cảm gia đình - con người','education_use'],
-    ['https://www.thivien.net/T%E1%BA%BF-Hanh/Qu%C3%AA-h%C6%B0%C6%A1ng/poem-PR_rg4McBsM23XpRQUZbWw','Tế Hanh',8,'thơ tám chữ','quê hương - biển cả','education_use'],
-    ['https://www.thivien.net/B%E1%BA%B1ng-Vi%E1%BB%87t/B%E1%BA%BFp-l%E1%BB%ADa/poem-lgCJ5h32csNKs00pNZOu3g','Bằng Việt',8,'thơ hỗn hợp','tình gia đình - bà cháu - ký ức','education_use'],
-    ['https://www.thivien.net/Huy-C%E1%BA%ADn/%C4%90o%C3%A0n-thuy%E1%BB%81n-%C4%91%C3%A1nh-c%C3%A1/poem-k8EDHIxplIZZ0LYB28XrSA','Huy Cận',8,'thơ bảy chữ','thiên nhiên - lao động - đất nước','education_use'],
-    ['https://www.thivien.net/Ch%C3%ADnh-H%E1%BB%AFu/%C4%90%E1%BB%93ng-ch%C3%AD/poem-xYZuhzmmmiLHd-0Syz9dHA','Chính Hữu',9,'thơ tự do','chiến tranh - tình đồng đội','education_use'],
-    ['https://www.thivien.net/Nguy%E1%BB%85n-Duy/%C3%81nh-tr%C4%83ng/poem-LZYel2RtqrJWQMzZsDPq2g','Nguyễn Duy',9,'thơ năm chữ','chiến tranh - ký ức - lòng biết ơn','education_use'],
-    ['https://www.thivien.net/H%E1%BB%AFu-Th%E1%BB%89nh/Sang-thu/poem-aeKKUxGbZwOwpQZsyen76g','Hữu Thỉnh',9,'thơ năm chữ','thiên nhiên - giao mùa - triết lý','education_use'],
-    ['https://www.thivien.net/Vi%E1%BB%85n-Ph%C6%B0%C6%A1ng/Vi%E1%BA%BFng-l%C4%83ng-B%C3%A1c/poem-ssM7VCNHXgctPBPvkDuAZw','Viễn Phương',9,'thơ tám chữ','yêu nước - lòng biết ơn - Bác Hồ','education_use'],
-    ['https://www.thivien.net/Y-Ph%C6%B0%C6%A1ng/N%C3%B3i-v%E1%BB%9Bi-con/poem-XCSfSxC-AM_w5wx1OjDiww','Y Phương',9,'thơ tự do','tình gia đình - bản sắc dân tộc','education_use'],
-    ['https://www.thivien.net/Nguy%E1%BB%85n-Duy/Tre-Vi%E1%BB%87t-Nam/poem-VkIfi7DKP2f1cM8JZZP8yA','Nguyễn Duy',9,'thơ lục bát','bản sắc dân tộc - sức sống Việt Nam','education_use'],
-  ];
+  const THIVIEN_POEMS = []; // Đã bỏ ngữ liệu thơ Ngữ văn — không dùng cho môn Tiếng Anh
 
-  const WIKISOURCE_TEXTS = [
-    ['https://vi.wikisource.org/wiki/Ch%C3%AD_Ph%C3%A8o','Chí Phèo','Nam Cao',8,'reading','truyện ngắn','số phận con người - bi kịch xã hội'],
-    ['https://vi.wikisource.org/wiki/L%C3%A3o_H%E1%BA%A1c','Lão Hạc','Nam Cao',8,'reading','truyện ngắn','số phận con người - tình cha con'],
-    ['https://vi.wikisource.org/wiki/Nam_qu%E1%BB%91c_s%C6%A1n_h%C3%A0','Nam quốc sơn hà','Lý Thường Kiệt',7,'reading','thơ cổ','yêu nước - chủ quyền dân tộc'],
-  ];
+  const WIKISOURCE_TEXTS = []; // Đã bỏ ngữ liệu truyện Ngữ văn — không dùng cho môn Tiếng Anh
 
   const sleep = ms => new Promise(r => setTimeout(r, ms));
   const CORS_PROXY = url => `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
@@ -4530,18 +4569,18 @@ const AutoUpdateModal = ({ data, setData, onClose }) => {
         <div className="flex items-center justify-between p-5 border-b">
           <div>
             <h3 className="text-lg font-bold text-slate-800">🔄 Cập nhật ngữ liệu tự động</h3>
-            <p className="text-sm text-slate-500 mt-0.5">Wikipedia API · thivien.net · Wikisource</p>
+            <p className="text-sm text-slate-500 mt-0.5">Tính năng lấy ngữ liệu Văn học tự động (Wikipedia/thivien.net/Wikisource) không áp dụng cho môn Tiếng Anh — cô dùng "Ngân hàng bài tập" để thêm nội dung Tiếng Anh nhé.</p>
           </div>
           {phase!=='running' && <button onClick={onClose} className="text-slate-400 hover:text-slate-600 text-2xl leading-none">×</button>}
         </div>
 
         {phase==='idle' && (
           <div className="p-6 flex-1 overflow-y-auto">
-            <div className="grid grid-cols-3 gap-3 mb-5">
+            <div className="grid grid-cols-3 gap-3 mb-5 opacity-40 pointer-events-none">
               {[
-                {icon:'📘',name:'Wikipedia API',count:WIKI_ARTICLES.length,desc:'Thông tin + Nghị luận',c:'blue'},
-                {icon:'📗',name:'thivien.net',count:THIVIEN_POEMS.length,desc:'Thơ lớp 6–9',c:'teal'},
-                {icon:'📕',name:'Wikisource',count:WIKISOURCE_TEXTS.length,desc:'Văn xuôi cổ điển',c:'rose'},
+                {icon:'📘',name:'Wikipedia API',count:WIKI_ARTICLES.length,desc:'Không dùng cho Tiếng Anh',c:'blue'},
+                {icon:'📗',name:'thivien.net',count:THIVIEN_POEMS.length,desc:'Không dùng cho Tiếng Anh',c:'teal'},
+                {icon:'📕',name:'Wikisource',count:WIKISOURCE_TEXTS.length,desc:'Không dùng cho Tiếng Anh',c:'rose'},
               ].map(s=>(
                 <div key={s.name} className={`bg-${s.c}-50 border border-${s.c}-200 rounded-xl p-3 text-center`}>
                   <div className="text-2xl mb-1">{s.icon}</div>
@@ -4677,7 +4716,7 @@ const KhoNguLieuTab = ({ data, setData, selectedClass, onBack }) => {
     return true;
   });
 
-  const genreColors = { van_hoc: 'teal', thong_tin: 'blue', nghi_luan: 'amber', hanh_chinh: 'rose' };
+  const genreColors = { grammar: 'teal', vocabulary: 'blue', reading: 'amber', writing: 'rose', speaking: 'purple' };
   const genreBadge = (genre) => {
     const g = LOAI_VAN_BAN.find(l => l.id === genre);
     const c = genreColors[genre] || 'slate';
@@ -4701,10 +4740,11 @@ const KhoNguLieuTab = ({ data, setData, selectedClass, onBack }) => {
 
   const stats = {
     total: allPassages.length,
-    van_hoc: allPassages.filter(p => p.genre === 'reading').length,
-    thong_tin: allPassages.filter(p => p.genre === 'thong_tin').length,
-    nghi_luan: allPassages.filter(p => p.genre === 'nghi_luan').length,
-    hanh_chinh: allPassages.filter(p => p.genre === 'hanh_chinh').length,
+    grammar: allPassages.filter(p => p.genre === 'grammar').length,
+    vocabulary: allPassages.filter(p => p.genre === 'vocabulary').length,
+    reading: allPassages.filter(p => p.genre === 'reading').length,
+    writing: allPassages.filter(p => p.genre === 'writing').length,
+    speaking: allPassages.filter(p => p.genre === 'speaking').length,
     pending: userPassages.filter(p => !p.approved).length,
   };
 
@@ -4755,10 +4795,11 @@ const KhoNguLieuTab = ({ data, setData, selectedClass, onBack }) => {
       <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
         {[
           { label: 'Tổng cộng', val: stats.total, color: 'slate' },
-          { label: '📖 Văn học', val: stats.van_hoc, color: 'teal' },
-          { label: '📰 Thông tin', val: stats.thong_tin, color: 'blue' },
-          { label: '💬 Nghị luận', val: stats.nghi_luan, color: 'amber' },
-          { label: '📋 Hành chính', val: stats.hanh_chinh, color: 'rose' },
+          { label: '📐 Ngữ pháp', val: stats.grammar, color: 'teal' },
+          { label: '🔤 Từ vựng', val: stats.vocabulary, color: 'blue' },
+          { label: '📖 Đọc hiểu', val: stats.reading, color: 'amber' },
+          { label: '✍️ Viết', val: stats.writing, color: 'rose' },
+          { label: '🎤 Nói', val: stats.speaking, color: 'purple' },
           { label: '⏳ Chờ duyệt', val: stats.pending, color: 'orange' },
         ].map(s => (
           <div key={s.label} className={`bg-white border rounded-xl p-3 text-center`}>
@@ -5023,7 +5064,7 @@ const NguLieuFinderView = ({ data, setData, selectedClass, onBack, onCreateExam 
   ];
   const THEMES = ['Thiên nhiên & môi trường','Tình yêu quê hương','Tuổi thơ & ký ức','Ước mơ & khát vọng','Tình cảm gia đình','Bạn bè & tình bạn','Công nghệ & cuộc sống hiện đại','Sáng tạo & nghệ thuật','Lòng nhân ái','Trách nhiệm với cộng đồng','Bình đẳng & công bằng','Môi trường số & mạng xã hội'];
   const INTERNET_SOURCES = {
-    tho:        ['vanvn.net (Hội Nhà Văn Việt Nam)','nxbkimdong.com.vn','thethaovanhoa.vn mục Văn học','tapchivanhocnghethuatphutho.vn','Facebook: Hội Nhà Văn Việt Nam'],
+    tho:        [],  // Đã bỏ — không dùng cho môn Tiếng Anh
     truyen:     ['truyengan.com.vn','vanvn.net','nxbtre.com.vn','tapchivan.com','thethaovanhoa.vn mục Văn xuôi'],
     thongtin:   ['nhandan.vn','tuoitre.vn','vnexpress.net mục Góc nhìn','laodong.vn','moha.gov.vn (tin chính phủ)'],
     nghiluan:   ['tuoitre.vn mục Bạn đọc viết','vnexpress.net Tâm sự','dantri.com.vn','thanhnien.vn','Facebook/Blog tác giả trẻ'],
@@ -5302,38 +5343,37 @@ const AutoGenExamView = ({ data, setData, selectedClass, teacherName, schoolName
       const loaiDe = examConfig.ten;
       const totalScore = examConfig.totalScore;
 
-      // Prompt chuẩn GDPT 2018 — 2 phần: Đọc hiểu 3đ + Viết 7đ — JSON output
-      const prompt = `Bạn là giáo viên Tiếng Anh Tiểu học chuyên nghiệp. Hãy tạo đề kiểm tra "${loaiDe}" môn Tiếng Anh lớp ${selectedGrade} theo chuẩn GDPT 2018 (bộ Global Success).
+      // Prompt chuẩn GDPT 2018 — 2 phần: Ngữ pháp-Từ vựng-Đọc hiểu 3đ + Viết 7đ — JSON output
+      const prompt = `Bạn là giáo viên Tiếng Anh Tiểu học chuyên nghiệp tại Việt Nam (bộ Global Success). Hãy tạo đề kiểm tra "${loaiDe}" môn Tiếng Anh lớp ${selectedGrade} theo chuẩn GDPT 2018, PHÙ HỢP TRÌNH ĐỘ TIỂU HỌC (câu đơn giản, từ vựng cơ bản).
 
-NGỮ LIỆU (${genreInfo?.ten || 'Văn bản'} — NGOÀI SÁCH GIÁO KHOA):
+NGỮ LIỆU (${genreInfo?.ten || 'Bài mẫu'} — dùng làm ngữ cảnh ra đề):
 Tiêu đề: ${passage.title}
-Tác giả: ${passage.author || 'Không rõ'}
 Nội dung:
 "${(passage.fullText || passage.content || '').substring(0, 600)}"
 
 YÊU CẦU CẤU TRÚC ĐỀ (${totalScore} điểm — 2 PHẦN):
 
-PHẦN I. ĐỌC HIỂU (3.0 điểm) — 5 câu, câu hỏi gắn với ngữ liệu trên. ${buildQuestionTypeInstruction(questionType)}
-  - Câu 1 (0.5đ) [Nhận biết]: Xác định thể loại/phương thức biểu đạt/ngôi kể
-  - Câu 2 (0.5đ) [Nhận biết]: Chi tiết, hình ảnh, từ ngữ đặc sắc trong văn bản
-  - Câu 3 (0.5đ) [Thông hiểu]: Ý nghĩa nội dung / biện pháp tu từ / cấu trúc câu
-  - Câu 4 (0.5đ) [Thông hiểu]: Phân tích ý nghĩa chi tiết / giải thích ngôn ngữ
-  - Câu 5 (1.0đ) [Vận dụng]: Rút ra bài học / liên hệ bản thân / nhận xét
+PHẦN I. NGỮ PHÁP - TỪ VỰNG - ĐỌC HIỂU (3.0 điểm) — 5 câu, bám sát ngữ liệu và chủ đề Unit trên. ${buildQuestionTypeInstruction(questionType)}
+  - Câu 1 (0.5đ) [Nhận biết]: Từ vựng — chọn từ đúng nghĩa/đúng chính tả liên quan chủ đề
+  - Câu 2 (0.5đ) [Nhận biết]: Ngữ pháp — chọn dạng đúng của từ trong ngoặc (to be/số nhiều/thì đơn giản)
+  - Câu 3 (0.5đ) [Thông hiểu]: Đọc hiểu — câu hỏi Đúng/Sai (True/False) dựa trên ngữ liệu
+  - Câu 4 (0.5đ) [Thông hiểu]: Đọc hiểu — câu hỏi trắc nghiệm về nội dung ngữ liệu
+  - Câu 5 (1.0đ) [Vận dụng]: Sắp xếp từ thành câu hoàn chỉnh, hoặc trả lời câu hỏi bằng 1 câu đầy đủ
 
 PHẦN II. VIẾT (7.0 điểm) — 1 bài viết hoàn chỉnh:
-  - Câu 6 (${selectedExamType === '15p' ? '3.0đ' : '7.0đ'}) [Vận dụng cao]: Viết ${selectedExamType === '15p' ? 'đoạn văn nghị luận (150-200 chữ)' : 'bài văn nghị luận (400-600 chữ)'} về chủ đề gợi ra từ văn bản hoặc phân tích tác phẩm văn học liên quan
+  - Câu 6 (${selectedExamType === '15p' ? '3.0đ' : '7.0đ'}) [Vận dụng cao]: Viết ${selectedExamType === '15p' ? '3-4 câu đơn giản' : 'đoạn văn ngắn 5-7 câu'} về chủ đề liên quan ngữ liệu trên (có câu hỏi gợi ý kiểu What/Where/Who để học sinh dễ viết)
 
 ĐỊNH DẠNG OUTPUT (JSON thuần túy, KHÔNG markdown, KHÔNG backtick, xuống dòng trong chuỗi PHẢI viết là \\n):
 {
-  "cauHoi": "PHẦN I. ĐỌC HIỂU (3.0 điểm)\\nĐọc văn bản sau và thực hiện các yêu cầu:\\n${{
-    tn: 'Câu 1 (0.5đ): [câu hỏi]\\\\nA. ... B. ... C. ... D. ...\\\\nCâu 2 (0.5đ): [câu hỏi]\\\\nA. ... B. ... C. ... D. ...\\\\nCâu 3 (0.5đ): [câu hỏi]\\\\nA. ... B. ... C. ... D. ...\\\\nCâu 4 (0.5đ): [câu hỏi]\\\\nA. ... B. ... C. ... D. ...\\\\nCâu 5 (1.0đ): [câu hỏi]\\\\nA. ... B. ... C. ... D. ...',
-    tl: 'Câu 1 (0.5đ): [câu hỏi tự luận]\\\\nCâu 2 (0.5đ): [câu hỏi tự luận]\\\\nCâu 3 (0.5đ): [câu hỏi tự luận]\\\\nCâu 4 (0.5đ): [câu hỏi tự luận]\\\\nCâu 5 (1.0đ): [câu hỏi tự luận]',
-    mix: 'Câu 1 (0.5đ): [câu hỏi]\\\\nA. ... B. ... C. ... D. ...\\\\nCâu 2 (0.5đ): [câu hỏi]\\\\nA. ... B. ... C. ... D. ...\\\\nCâu 3 (0.5đ): [câu hỏi]\\\\nA. ... B. ... C. ... D. ...\\\\nCâu 4 (0.5đ): [câu hỏi]\\\\nA. ... B. ... C. ... D. ...\\\\nCâu 5 (1.0đ): [câu hỏi tự luận]',
+  "cauHoi": "PHẦN I. NGỮ PHÁP - TỪ VỰNG - ĐỌC HIỂU (3.0 điểm)\\nĐọc đoạn văn sau và thực hiện các yêu cầu:\\n${{
+    tn: 'Câu 1 (0.5đ): [câu hỏi]\\\\nA. ... B. ... C. ... D. ...\\\\nCâu 2 (0.5đ): [câu hỏi]\\\\nA. ... B. ... C. ... D. ...\\\\nCâu 3 (0.5đ): [câu hỏi True/False]\\\\nCâu 4 (0.5đ): [câu hỏi]\\\\nA. ... B. ... C. ... D. ...\\\\nCâu 5 (1.0đ): [câu hỏi]\\\\nA. ... B. ... C. ... D. ...',
+    tl: 'Câu 1 (0.5đ): [câu hỏi tự luận]\\\\nCâu 2 (0.5đ): [câu hỏi tự luận]\\\\nCâu 3 (0.5đ): [câu hỏi True/False]\\\\nCâu 4 (0.5đ): [câu hỏi tự luận]\\\\nCâu 5 (1.0đ): [câu hỏi tự luận]',
+    mix: 'Câu 1 (0.5đ): [câu hỏi]\\\\nA. ... B. ... C. ... D. ...\\\\nCâu 2 (0.5đ): [câu hỏi]\\\\nA. ... B. ... C. ... D. ...\\\\nCâu 3 (0.5đ): [câu hỏi True/False]\\\\nCâu 4 (0.5đ): [câu hỏi]\\\\nA. ... B. ... C. ... D. ...\\\\nCâu 5 (1.0đ): [câu hỏi tự luận]',
   }[questionType]}\\nPHẦN II. VIẾT (7.0 điểm)\\nCâu 6 (7.0đ): [đề bài viết]",
-  "dapAn": "PHẦN I. ĐỌC HIỂU\\nCâu 1: [đáp án + giải thích]\\nCâu 2: [đáp án]\\nCâu 3: [đáp án]\\nCâu 4: [đáp án]\\nCâu 5: [gợi ý trả lời]\\nPHẦN II. VIẾT\\nCâu 6: [dàn ý gợi ý + tiêu chí chấm điểm]"
+  "dapAn": "PHẦN I. NGỮ PHÁP - TỪ VỰNG - ĐỌC HIỂU\\nCâu 1: [đáp án + giải thích]\\nCâu 2: [đáp án]\\nCâu 3: [đáp án]\\nCâu 4: [đáp án]\\nCâu 5: [gợi ý trả lời]\\nPHẦN II. VIẾT\\nCâu 6: [gợi ý câu trả lời mẫu + tiêu chí chấm điểm theo Nội dung/Ngữ pháp/Từ vựng/Trình bày]"
 }
 
-Chú ý: Câu hỏi Đọc hiểu PHẢI BÁM SÁT ngữ liệu. Câu trắc nghiệm (nếu có) phải có 4 lựa chọn A/B/C/D.`;
+Chú ý: Câu hỏi PHẢI BÁM SÁT ngữ liệu và phù hợp trình độ tiểu học. Câu trắc nghiệm (nếu có) phải có 4 lựa chọn A/B/C/D. Nội dung Viết phải có gợi ý rõ ràng để học sinh dễ làm.`;
 
       const result = await callGroqAPI(prompt, 2000);
       if (result.error) { alert(result.error); setGenerating(false); return; }
@@ -6508,78 +6548,58 @@ const LibraryTab = ({ setActive }) => {
   // 📚 Dữ liệu mẫu 65 bài
   const SAMPLE_DATA = {
     shared: [
-      // 📖 VĂN HỌC (30 bài)
-      { id: 1, name: '📖 Truyện ngắn: Chiếc lá cuối cùng - O. Henry', size: '150 KB', uploadedAt: '2026-04-21', content: 'Chiếc lá cuối cùng là một truyện ngắn của O. Henry (1905). Tác phẩm kể về bệnh nữ (pneumonia) trong một khu phố nghèo của New York...' },
-      { id: 2, name: '📖 Tác giả: Nguyễn Nhật Ánh - Tiểu sử và sáng tác', size: '200 KB', uploadedAt: '2026-04-21', content: 'Nguyễn Nhật Ánh (sinh 1955) là nhà văn nổi tiếng Việt Nam. Ông nổi tiếng với các tác phẩm dành cho thiếu nhi như "Tôi thấy hoa vàng trên cỏ xanh"...' },
-      { id: 3, name: '📖 Thơ: Những bài thơ hay của Hàn Mặc Tử', size: '120 KB', uploadedAt: '2026-04-21', content: 'Hàn Mặc Tử (1912-1940) là nhà thơ nước Pháp gốc Hoa. Những bài thơ của ông mang tính chất tâm lý sâu sắc, phản ánh cuộc sống và tình yêu...' },
-      { id: 4, name: '📖 Truyện dân gian: Sự tích Nàng Mây', size: '100 KB', uploadedAt: '2026-04-21', content: 'Truyện dân gian Việt Nam kể về Nàng Mây - một vị thần trong thần thoại Việt. Nàng Mây tượng trưng cho sự may mắn và phước lành...' },
-      { id: 5, name: '📖 Phân tích: Anh em nhà Mặc Kê của Dương Khuê', size: '180 KB', uploadedAt: '2026-04-21', content: 'Anh em nhà Mặc Kê là một tác phẩm kinh điển của Dương Khuê. Tác phẩm phân tích tính cách của hai nhân vật chính qua cuộc đối thoại...' },
-      { id: 6, name: '📖 Cảm nhận: Vợ chồng A Phủ - Tô Hoài', size: '140 KB', uploadedAt: '2026-04-21', content: 'Vợ chồng A Phủ là tác phẩm tiêu biểu của Tô Hoài. Bài viết phân tích sâu sắc về tình yêu, hy sinh và lý tưởng cộng sản qua hình ảnh A Phủ...' },
-      { id: 7, name: '📖 Giáo dục: Lêm Phát hành - Thừa Thiên Huế', size: '110 KB', uploadedAt: '2026-04-21', content: 'Lêm Phát hành là tác phẩm của nhà văn Thừa Thiên Huế. Tác phẩm này dạy những bài học về đạo đức và giáo dục qua câu chuyện của Lêm Phát...' },
-      { id: 8, name: '📖 Thơ cổ: Lưu bút Hàng Mã của Hàn Mặc Tử', size: '95 KB', uploadedAt: '2026-04-21', content: 'Lưu bút Hàng Mã là bài thơ nổi tiếng của Hàn Mặc Tử. Bài thơ này được viết với phong cách lãng mạn, tự sự về những cảm xúc...' },
-      { id: 9, name: '📖 Tiểu sử: Tản Đà - Nhà thơ yêu nước', size: '160 KB', uploadedAt: '2026-04-21', content: 'Tản Đà (1889-1939) là nhà thơ và dịch giả nổi tiếng Việt Nam. Ông nổi tiếng với những bài thơ yêu nước và khát vọng độc lập...' },
-      { id: 10, name: '📖 Sáng tác: Đất nước của chúng ta - Phan Bội Châu', size: '130 KB', uploadedAt: '2026-04-21', content: 'Đất nước của chúng ta là tác phẩm văn học của Phan Bội Châu. Tác phẩm này thể hiện tình yêu nước và niềm khát vọng độc lập của dân tộc...' },
-      { id: 11, name: '📖 Phân tích: Quạng Nam Kỳ của Dương Khuê', size: '150 KB', uploadedAt: '2026-04-21', content: 'Quạng Nam Kỳ là một phần của tác phẩm "Cổ tích của dân Việt". Đây là bộ sưu tập những câu chuyện dân gian phản ánh cuộc sống...' },
-      { id: 12, name: '📖 Thơ: Bình minh của Xuân Diệu', size: '108 KB', uploadedAt: '2026-04-21', content: 'Xuân Diệu (1912-1992) là nhà thơ tiêu biểu của nền thơ Việt hiện đại. Bài thơ "Bình minh" thể hiện sự lạc quan và khát vọng sống...' },
-      { id: 13, name: '📖 Truyện: Chuyện tình của Hoan Cung', size: '180 KB', uploadedAt: '2026-04-21', content: 'Hoan Cung là một tác phẩm lãng mạn của văn học Việt. Câu chuyện kể về tình yêu giữa hai nhân vật chính trong hoàn cảnh...' },
-      { id: 14, name: '📖 Sáng tác: Mẹ thương con - Nguyễn Tuân', size: '120 KB', uploadedAt: '2026-04-21', content: 'Nguyễn Tuân là nhà văn nổi tiếng Việt Nam. Bài "Mẹ thương con" là một tác phẩm cảm động về tình yêu mẹ và những hy sinh...' },
-      { id: 15, name: '📖 Phân tích: Lặng đi - Bùi Giáng', size: '110 KB', uploadedAt: '2026-04-21', content: 'Bùi Giáng là nhà thơ đương đại. Bài thơ "Lặng đi" là một bài thơ hiện đại phản ánh sâu sắc về tâm hồn con người...' },
-      { id: 16, name: '📖 Thơ cổ: Dạ Khúc của Hàn Mặc Tử', size: '95 KB', uploadedAt: '2026-04-21', content: 'Dạ Khúc là bài thơ nôm nán Việt Nam cổ điển. Bài thơ này kể về cuộc sống ban đêm và những cảm xúc của nhân vật...' },
-      { id: 17, name: '📖 Tiểu sử: Đỗ Phan - Nhà thơ vua', size: '140 KB', uploadedAt: '2026-04-21', content: 'Đỗ Phan là nhà thơ nổi tiếng của triều Nguyễn. Ông nổi tiếng với những bài thơ yêu nước và văn vẻ lời lẽ...' },
-      { id: 18, name: '📖 Sáng tác: Những ngôi sao - Thế Lữ', size: '155 KB', uploadedAt: '2026-04-21', content: 'Thế Lữ là nhà thơ tài ba của thời kỳ tiền chiến. Bài thơ "Những ngôi sao" là một tác phẩm đầy tính lãng mạn...' },
-      { id: 19, name: '📖 Phân tích: Kim Vân Kiều của Nguyễn Du', size: '200 KB', uploadedAt: '2026-04-21', content: 'Kim Vân Kiều là kinh điển văn học Việt Nam do Nguyễn Du viết. Tác phẩm này kể về cuộc sống của Kim, Vân, Kiều qua các giai đoạn...' },
-      { id: 20, name: '📖 Cảm nhận: Vũ Trụ của Tạo Hóa - Hàn Mặc Tử', size: '125 KB', uploadedAt: '2026-04-21', content: 'Hàn Mặc Tử có nhiều bài thơ về thiên nhiên và vũ trụ. Những bài thơ này phản ánh tính chất cảm tính và triết học của nhà thơ...' },
-      { id: 21, name: '📖 Truyện: Quyết tâm của Nguyễn Hữu', size: '170 KB', uploadedAt: '2026-04-21', content: 'Nguyễn Hữu là nhà văn hiện đại. Tác phẩm "Quyết tâm" kể về cuộc đấu tranh của nhân vật chính để đạt được mục tiêu...' },
-      { id: 22, name: '📖 Sáng tác: Gió Gặp Gió - Vũ Trụ', size: '130 KB', uploadedAt: '2026-04-21', content: 'Vũ Trụ là nhà thơ đương đại nổi tiếng. Bài "Gió Gặp Gió" là một bài thơ đầy tính biểu tượng và triết lý...' },
-      { id: 23, name: '📖 Phân tích: Khổ sở của con người - Nguyễn Tường', size: '140 KB', uploadedAt: '2026-04-21', content: 'Nguyễn Tường là nhà văn tài ba. Tác phẩm này phân tích sâu sắc về nỗi khổ sở và khát vọng của con người...' },
-      { id: 24, name: '📖 Tiểu sử: Lê Đại Hành - Vị Vua tài ba', size: '160 KB', uploadedAt: '2026-04-21', content: 'Lê Đại Hành (980-1005) là vị vua tài ba của Việt Nam. Ông nổi tiếng với những chiến công và những quy định về luật pháp...' },
-      { id: 25, name: '📖 Thơ: Lời tâm sự của Hàn Mặc Tử', size: '110 KB', uploadedAt: '2026-04-21', content: 'Hàn Mặc Tử có bộ thơ lâm long. Những bài thơ này là những lời tâm sự sâu sắc về tình yêu, cuộc sống và tử vong...' },
-      { id: 26, name: '📖 Cảm nhận: Ông già và biển - Hemingway', size: '150 KB', uploadedAt: '2026-04-21', content: 'Ông già và biển là tác phẩm nổi tiếng của Hemingway. Tác phẩm này kể về cuộc chiến giữa con người và thiên nhiên...' },
-      { id: 27, name: '📖 Sáng tác: Về quê - Nguyễn Duy', size: '125 KB', uploadedAt: '2026-04-21', content: 'Nguyễn Duy là nhà thơ nổi tiếng hiện đại. Bài "Về quê" là một bài thơ cảm động về tình yêu đất nước...' },
-      { id: 28, name: '📖 Phân tích: Đêm Giáng Sinh - Trần Dạ Tuyến', size: '135 KB', uploadedAt: '2026-04-21', content: 'Trần Dạ Tuyến là nữ nhà văn tài ba. Tác phẩm "Đêm Giáng Sinh" là một truyện ngắn đầy tính nhân văn...' },
-      { id: 29, name: '📖 Truyện: Những lá thư yêu - Phan Khôi', size: '155 KB', uploadedAt: '2026-04-21', content: 'Phan Khôi là nhà văn và nhà phê bình nổi tiếng. Tác phẩm này kể về những lá thư yêu giữa hai nhân vật...' },
-      { id: 30, name: '📖 Tiểu sử: Ba Tưởng - Vị Tướng Anh Hùng', size: '170 KB', uploadedAt: '2026-04-21', content: 'Ba Tưởng (Trần Hưng Đạo) là vị tướng anh hùng của Việt Nam. Ông nổi tiếng với những chiến thắng lịch sử...' },
+      // 📚 SÁCH GIÁO KHOA & TÀI LIỆU THAM KHẢO (theo từng khối lớp)
+      { id: 1, name: '📗 SGK: Tiếng Anh 1 - Global Success (tóm tắt cấu trúc)', size: '2 MB', uploadedAt: '2026-04-21', content: 'Tóm tắt 20 Unit của SGK Tiếng Anh 1 - Global Success: làm quen chào hỏi, màu sắc, số đếm 1-10, gia đình, cơ thể, đồ chơi, con vật, đồ ăn... Cô tải file SGK thật (PDF/ảnh) để dùng làm ngữ liệu chính xác.' },
+      { id: 2, name: '📘 SGK: Tiếng Anh 2 - Global Success (tóm tắt cấu trúc)', size: '2 MB', uploadedAt: '2026-04-21', content: 'Tóm tắt 20 Unit của SGK Tiếng Anh 2 - Global Success: mở rộng từ vựng chủ đề gia đình, nhà cửa, trường học, thời tiết, hoạt động hằng ngày...' },
+      { id: 3, name: '📙 SGK: Tiếng Anh 3 - Global Success (tóm tắt cấu trúc)', size: '3 MB', uploadedAt: '2026-04-21', content: 'Tóm tắt 20 Unit của SGK Tiếng Anh 3 - Global Success (môn học bắt buộc từ lớp 3): bạn bè, trường học, gia đình, nhà cửa, sở thích, mùa và thời tiết...' },
+      { id: 4, name: '📕 SGK: Tiếng Anh 4 - Global Success (tóm tắt cấu trúc)', size: '3 MB', uploadedAt: '2026-04-21', content: 'Tóm tắt 20 Unit của SGK Tiếng Anh 4 - Global Success: thời khóa biểu, hàng xóm, dịp đặc biệt, sức khỏe, nghề nghiệp, thì hiện tại tiếp diễn...' },
+      { id: 5, name: '📔 SGK: Tiếng Anh 5 - Global Success (tóm tắt cấu trúc)', size: '3 MB', uploadedAt: '2026-04-21', content: 'Tóm tắt 20 Unit của SGK Tiếng Anh 5 - Global Success (chuẩn bị lên THCS): cộng đồng, thiên nhiên Việt Nam, so sánh hơn/nhất, dự định tương lai, môi trường...' },
+      { id: 6, name: '📚 Khung năng lực Tiếng Anh Tiểu học theo CTGDPT 2018', size: '1.5 MB', uploadedAt: '2026-04-21', content: 'Yêu cầu cần đạt về 4 kỹ năng Nghe-Nói-Đọc-Viết cho từng khối lớp 1-5 theo Chương trình giáo dục phổ thông 2018 môn Tiếng Anh.' },
+      { id: 7, name: '🎯 Bộ 300 từ vựng cốt lõi Tiếng Anh Tiểu học', size: '500 KB', uploadedAt: '2026-04-21', content: 'Danh sách 300 từ vựng thông dụng nhất theo các chủ đề: gia đình, trường học, màu sắc, con vật, đồ ăn, số đếm, thời tiết, cơ thể... kèm phiên âm và nghĩa tiếng Việt.' },
+      { id: 8, name: '📐 Bảng tổng hợp ngữ pháp Tiếng Anh Tiểu học', size: '400 KB', uploadedAt: '2026-04-21', content: 'Tổng hợp các điểm ngữ pháp trọng tâm lớp 1-5: to be, số nhiều, hiện tại đơn, hiện tại tiếp diễn, so sánh hơn/nhất, thì tương lai đơn...' },
+      { id: 9, name: '🎵 Bộ bài hát và vần điệu tiếng Anh cho trẻ em (Chants & Songs)', size: '300 KB', uploadedAt: '2026-04-21', content: 'Danh sách các bài hát, vần điệu tiếng Anh phù hợp lứa tuổi Tiểu học để khởi động và ôn từ vựng đầu giờ học.' },
+      { id: 10, name: '🖼️ Bộ flashcard chủ đề (Family, Animals, Food, School...)', size: '5 MB', uploadedAt: '2026-04-21', content: 'Bộ thẻ hình ảnh (flashcard) minh họa từ vựng theo từng chủ đề, dùng để dạy từ mới trực quan cho học sinh Tiểu học.' },
 
-      // 📝 BÀI GIẢNG (15 bài)
-      { id: 31, name: '📝 Giáo án: Lớp 3 - Unit 5 Our Family', size: '220 KB', uploadedAt: '2026-04-21', content: 'Giáo án chi tiết Unit 5: Our Family dành cho lớp 3. Bao gồm: Mục tiêu, từ vựng, mẫu câu, phương pháp dạy, hoạt động lớp...' },
-      { id: 32, name: '📝 Phương pháp: Dạy kỹ năng nghe nói Tiếng Anh', size: '180 KB', uploadedAt: '2026-04-21', content: 'Hướng dẫn chi tiết các phương pháp dạy kỹ năng nghe nói cho học sinh Tiểu học...' },
-      { id: 33, name: '📝 Giáo án: Lớp 7 - Phân tích tác phẩm', size: '210 KB', uploadedAt: '2026-04-21', content: 'Giáo án dạy phân tích tác phẩm văn học cho lớp 7. Hướng dẫn chi tiết từng bước...' },
-      { id: 34, name: '📝 Kế hoạch: Chương trình năm học', size: '160 KB', uploadedAt: '2026-04-21', content: 'Kế hoạch giảng dạy toàn năm cho môn Tiếng Anh Tiểu học. Bao gồm phân phối chương trình và mục tiêu mỗi học kỳ...' },
-      { id: 35, name: '📝 Hoạt động: Trò chơi trong lớp học', size: '140 KB', uploadedAt: '2026-04-21', content: 'Các hoạt động trò chơi giáo dục để tăng hứng thú học tập cho học sinh...' },
-      { id: 36, name: '📝 Giáo án: Lớp 8 - Viết mô tả', size: '190 KB', uploadedAt: '2026-04-21', content: 'Giáo án dạy kỹ năng viết mô tả cho lớp 8. Hướng dẫn chi tiết cấu trúc và cách viết...' },
-      { id: 37, name: '📝 Đánh giá: Rubric chấm bài viết', size: '130 KB', uploadedAt: '2026-04-21', content: 'Tiêu chí chi tiết để đánh giá bài viết của học sinh. Bao gồm nội dung, cấu trúc, ngữ pháp...' },
-      { id: 38, name: '📝 Giáo án: Lớp 9 - Chuẩn bị thi', size: '220 KB', uploadedAt: '2026-04-21', content: 'Giáo án ôn luyện toàn bộ kiến thức Văn cho kỳ thi lớp 9...' },
-      { id: 39, name: '📝 Phương pháp: Làm việc nhóm nhỏ', size: '150 KB', uploadedAt: '2026-04-21', content: 'Hướng dẫn tổ chức hoạt động làm việc nhóm hiệu quả trong lớp học...' },
-      { id: 40, name: '📝 Giáo án: Tập làm văn biểu cảm', size: '170 KB', uploadedAt: '2026-04-21', content: 'Hướng dẫn chi tiết cách dạy học sinh viết văn biểu cảm...' },
-      { id: 41, name: '📝 Câu hỏi: Gợi ý phát triển tư duy', size: '120 KB', uploadedAt: '2026-04-21', content: 'Các câu hỏi gợi ý giúp phát triển tư duy sáng tạo của học sinh...' },
-      { id: 42, name: '📝 Giáo án: Luyện tập kỹ năng nghe nói', size: '160 KB', uploadedAt: '2026-04-21', content: 'Giáo án luyện tập kỹ năng nghe, nói, thuyết trình cho học sinh...' },
-      { id: 43, name: '📝 Liên kết: Kết nối Văn với các môn khác', size: '140 KB', uploadedAt: '2026-04-21', content: 'Hướng dẫn liên kết kiến thức Văn với các môn học khác...' },
-      { id: 44, name: '📝 Giáo án: Thảo luận và tranh luận', size: '150 KB', uploadedAt: '2026-04-21', content: 'Hướng dẫn tổ chức các hoạt động thảo luận và tranh luận trong lớp...' },
-      { id: 45, name: '📝 Đồ dùng: Sử dụng công nghệ trong giảng dạy', size: '180 KB', uploadedAt: '2026-04-21', content: 'Hướng dẫn sử dụng công nghệ (PowerPoint, video, v.v.) trong giảng dạy Văn...' },
+      // 📝 GIÁO ÁN & PHƯƠNG PHÁP DẠY TIẾNG ANH (15 bài)
+      { id: 11, name: '📝 Giáo án: Lớp 3 - Unit 5 Our Family', size: '220 KB', uploadedAt: '2026-04-21', content: 'Giáo án chi tiết Unit 5: Our Family dành cho lớp 3. Bao gồm: Mục tiêu, từ vựng, mẫu câu, phương pháp dạy, hoạt động lớp...' },
+      { id: 12, name: '📝 Phương pháp: Dạy kỹ năng nghe nói Tiếng Anh (TPR)', size: '180 KB', uploadedAt: '2026-04-21', content: 'Hướng dẫn phương pháp Total Physical Response (TPR) và các hoạt động nghe nói cho học sinh Tiểu học...' },
+      { id: 13, name: '📝 Kế hoạch: Phân phối chương trình năm học', size: '160 KB', uploadedAt: '2026-04-21', content: 'Kế hoạch giảng dạy toàn năm cho môn Tiếng Anh Tiểu học. Bao gồm phân phối chương trình và mục tiêu mỗi học kỳ...' },
+      { id: 14, name: '📝 Hoạt động: Trò chơi từ vựng trong lớp học (Games)', size: '140 KB', uploadedAt: '2026-04-21', content: 'Các trò chơi (Bingo, Simon Says, Flashcard Race...) để tăng hứng thú học từ vựng cho học sinh Tiểu học...' },
+      { id: 15, name: '📝 Giáo án: Lớp 4 - Unit 8 Special Occasions', size: '210 KB', uploadedAt: '2026-04-21', content: 'Giáo án chi tiết Unit 8 dành cho lớp 4, dạy về từ vựng và mẫu câu liên quan các dịp đặc biệt (Tết, sinh nhật)...' },
+      { id: 16, name: '📝 Đánh giá: Rubric chấm bài Viết Tiếng Anh Tiểu học', size: '130 KB', uploadedAt: '2026-04-21', content: 'Tiêu chí chi tiết để đánh giá bài viết Tiếng Anh: Nội dung, Ngữ pháp, Từ vựng, Chính tả & trình bày...' },
+      { id: 17, name: '📝 Giáo án: Lớp 5 - Ôn tập chuyển cấp', size: '220 KB', uploadedAt: '2026-04-21', content: 'Giáo án ôn luyện tổng hợp kiến thức Tiếng Anh Tiểu học chuẩn bị cho học sinh lớp 5 chuyển cấp THCS...' },
+      { id: 18, name: '📝 Phương pháp: Tổ chức hoạt động cặp/nhóm (Pair & Group Work)', size: '150 KB', uploadedAt: '2026-04-21', content: 'Hướng dẫn tổ chức hoạt động luyện nói theo cặp/nhóm hiệu quả trong giờ học Tiếng Anh...' },
+      { id: 19, name: '📝 Giáo án: Dạy phát âm cơ bản (Phonics)', size: '170 KB', uploadedAt: '2026-04-21', content: 'Hướng dẫn dạy phát âm theo phương pháp Phonics cho học sinh lớp 1-2, làm nền tảng đọc từ...' },
+      { id: 20, name: '📝 Câu hỏi: Gợi ý câu hỏi phát triển tư duy bằng Tiếng Anh', size: '120 KB', uploadedAt: '2026-04-21', content: 'Các mẫu câu hỏi tiếng Anh đơn giản giúp học sinh phát triển tư duy và phản xạ ngôn ngữ...' },
+      { id: 21, name: '📝 Giáo án: Luyện tập kỹ năng nghe hiểu (Listening)', size: '160 KB', uploadedAt: '2026-04-21', content: 'Giáo án luyện tập kỹ năng nghe hiểu cơ bản cho học sinh Tiểu học qua hội thoại ngắn...' },
+      { id: 22, name: '📝 Liên kết: Lồng ghép Tiếng Anh với các môn học khác (CLIL)', size: '140 KB', uploadedAt: '2026-04-21', content: 'Hướng dẫn lồng ghép từ vựng Tiếng Anh vào các môn học khác như Toán, Tự nhiên & Xã hội...' },
+      { id: 23, name: '📝 Giáo án: Thảo luận và đóng vai (Role-play)', size: '150 KB', uploadedAt: '2026-04-21', content: 'Hướng dẫn tổ chức hoạt động đóng vai (role-play) luyện hội thoại tiếng Anh trong lớp...' },
+      { id: 24, name: '📝 Công nghệ: Ứng dụng phần mềm hỗ trợ dạy Tiếng Anh', size: '180 KB', uploadedAt: '2026-04-21', content: 'Hướng dẫn sử dụng công nghệ (video, audio, ứng dụng học từ vựng...) trong giảng dạy Tiếng Anh...' },
+      { id: 25, name: '📝 Giáo án: Kể chuyện bằng tranh (Storytelling)', size: '190 KB', uploadedAt: '2026-04-21', content: 'Hướng dẫn dạy kỹ năng đọc hiểu qua phương pháp kể chuyện bằng tranh cho học sinh Tiểu học...' },
 
-      // 🏛️ CÔNG VĂN (10 bài)
-      { id: 46, name: '🏛️ Thư: Thư xin việc chuẩn mực', size: '85 KB', uploadedAt: '2026-04-21', content: 'Mẫu thư xin việc chuyên nghiệp và đúng format. Hướng dẫn cách viết thư xin việc...' },
-      { id: 47, name: '🏛️ Công văn: Công văn hành chính cơ bản', size: '110 KB', uploadedAt: '2026-04-21', content: 'Mẫu công văn hành chính đúng format. Bao gồm: Tiêu đề, nội dung, chữ ký...' },
-      { id: 48, name: '🏛️ Thư: Thư cảm ơn chính thức', size: '90 KB', uploadedAt: '2026-04-21', content: 'Mẫu thư cảm ơn chính thức dùng trong công sở...' },
-      { id: 49, name: '🏛️ Đơn: Đơn xin phép nghỉ học', size: '75 KB', uploadedAt: '2026-04-21', content: 'Mẫu đơn xin phép nghỉ học chuẩn mực...' },
-      { id: 50, name: '🏛️ Thư: Thư giới thiệu bản thân', size: '95 KB', uploadedAt: '2026-04-21', content: 'Mẫu thư giới thiệu bản thân khi gửi CV...' },
-      { id: 51, name: '🏛️ Tờ rơi: Mẫu tờ rơi quảng cáo', size: '120 KB', uploadedAt: '2026-04-21', content: 'Mẫu và hướng dẫn viết tờ rơi quảng cáo hiệu quả...' },
-      { id: 52, name: '🏛️ Báo cáo: Mẫu báo cáo kết quả công tác', size: '140 KB', uploadedAt: '2026-04-21', content: 'Mẫu báo cáo kết quả công tác chuẩn chỉnh...' },
-      { id: 53, name: '🏛️ Hợp đồng: Hợp đồng đơn giản', size: '130 KB', uploadedAt: '2026-04-21', content: 'Mẫu hợp đồng đơn giản giữa hai bên...' },
-      { id: 54, name: '🏛️ Chứng chỉ: Mẫu chứng chỉ hoàn thành khóa học', size: '110 KB', uploadedAt: '2026-04-21', content: 'Mẫu chứng chỉ hoàn thành khóa học...' },
-      { id: 55, name: '🏛️ Tờ khai: Mẫu tờ khai thông tin cá nhân', size: '100 KB', uploadedAt: '2026-04-21', content: 'Mẫu tờ khai thông tin cá nhân chuẩn mực...' },
+      // ✉️ MẪU GIẤY TỜ LỚP HỌC (10 bài)
+      { id: 26, name: '✉️ Mẫu: Thông báo gửi phụ huynh (song ngữ)', size: '85 KB', uploadedAt: '2026-04-21', content: 'Mẫu thông báo kết quả học tập gửi phụ huynh, có thể soạn song ngữ Việt-Anh...' },
+      { id: 27, name: '✉️ Mẫu: Giấy khen học sinh (tiếng Anh)', size: '90 KB', uploadedAt: '2026-04-21', content: 'Mẫu giấy khen "Certificate of Achievement" bằng tiếng Anh dành tặng học sinh xuất sắc...' },
+      { id: 28, name: '✉️ Mẫu: Phiếu bài tập về nhà theo Unit', size: '75 KB', uploadedAt: '2026-04-21', content: 'Mẫu phiếu bài tập về nhà theo từng Unit, có phần ký xác nhận của phụ huynh...' },
+      { id: 29, name: '✉️ Mẫu: Đơn xin phép nghỉ học', size: '75 KB', uploadedAt: '2026-04-21', content: 'Mẫu đơn xin phép nghỉ học chuẩn mực dành cho phụ huynh...' },
+      { id: 30, name: '✉️ Mẫu: Thư mời họp phụ huynh', size: '95 KB', uploadedAt: '2026-04-21', content: 'Mẫu thư mời họp phụ huynh đầu năm/cuối kỳ...' },
+      { id: 31, name: '✉️ Mẫu: Báo cáo tiến độ học tập theo Unit', size: '120 KB', uploadedAt: '2026-04-21', content: 'Mẫu báo cáo tiến độ học tập của học sinh theo từng Unit đã học...' },
+      { id: 32, name: '✉️ Mẫu: Phiếu tự đánh giá của học sinh (Self-assessment)', size: '90 KB', uploadedAt: '2026-04-21', content: 'Mẫu phiếu để học sinh tự đánh giá mức độ hiểu bài sau mỗi Unit (dạng mặt cười/mặt buồn)...' },
+      { id: 33, name: '✉️ Mẫu: Sổ liên lạc điện tử', size: '100 KB', uploadedAt: '2026-04-21', content: 'Mẫu ghi chép sổ liên lạc điện tử theo dõi quá trình học tập của học sinh...' },
+      { id: 34, name: '✉️ Mẫu: Kế hoạch dự giờ / thao giảng', size: '110 KB', uploadedAt: '2026-04-21', content: 'Mẫu kế hoạch cho tiết dự giờ, thao giảng môn Tiếng Anh...' },
+      { id: 35, name: '✉️ Mẫu: Giấy chứng nhận hoàn thành khóa học', size: '100 KB', uploadedAt: '2026-04-21', content: 'Mẫu giấy chứng nhận hoàn thành cấp độ/khóa học Tiếng Anh...' },
 
-      // 💡 TÀI LIỆU THAM KHẢO (10 bài)
-      { id: 56, name: '💡 Ngữ pháp: Quy tắc cơ bản tiếng Việt', size: '150 KB', uploadedAt: '2026-04-21', content: 'Tổng hợp các quy tắc ngữ pháp cơ bản của tiếng Việt...' },
-      { id: 57, name: '💡 Từ vựng: Từ điển từ đồng nghĩa', size: '180 KB', uploadedAt: '2026-04-21', content: 'Danh sách những từ đồng nghĩa hay dùng trong tiếng Việt...' },
-      { id: 58, name: '💡 Thành ngữ: 100 thành ngữ phổ biến', size: '140 KB', uploadedAt: '2026-04-21', content: 'Danh sách 100 thành ngữ phổ biến trong tiếng Việt cùng giải thích...' },
-      { id: 59, name: '💡 Chính tả: Quy tắc viết hoa đúng', size: '110 KB', uploadedAt: '2026-04-21', content: 'Hướng dẫn chi tiết về quy tắc viết hoa trong tiếng Việt...' },
-      { id: 60, name: '💡 Dấu câu: Hướng dẫn sử dụng dấu câu', size: '130 KB', uploadedAt: '2026-04-21', content: 'Hướng dẫn chi tiết về cách sử dụng dấu câu trong tiếng Việt...' },
-      { id: 61, name: '💡 Từ Hán Việt: Những từ Hán Việt hay gặp', size: '160 KB', uploadedAt: '2026-04-21', content: 'Danh sách những từ Hán Việt hay gặp trong tiếng Việt...' },
-      { id: 62, name: '💡 Biểu cảm: Cách dùng biểu hiện tình cảm', size: '125 KB', uploadedAt: '2026-04-21', content: 'Hướng dẫn cách dùng các biểu hiện tình cảm trong tiếng Việt...' },
-      { id: 63, name: '💡 Viết lách: Kỹ năng viết đẹp chữ', size: '95 KB', uploadedAt: '2026-04-21', content: 'Hướng dẫn cách viết đẹp chữ và những lưu ý quan trọng...' },
-      { id: 64, name: '💡 Kiểu cách: Phân biệt các kiểu cách viết', size: '140 KB', uploadedAt: '2026-04-21', content: 'Hướng dẫn phân biệt các kiểu cách viết: lách ngôn, chính thức, thân mật, v.v.' },
-      { id: 65, name: '💡 Tài liệu: Danh sách sách Văn hay đọc', size: '130 KB', uploadedAt: '2026-04-21', content: 'Danh sách những cuốn sách Văn hay đọc bổ sung kiến thức cho học sinh...' }
+      // 💡 TÀI LIỆU THAM KHẢO CHUYÊN MÔN (10 bài)
+      { id: 36, name: '💡 Ngữ pháp: Tổng hợp thì động từ Tiếng Anh Tiểu học', size: '150 KB', uploadedAt: '2026-04-21', content: 'Tổng hợp các thì cơ bản: hiện tại đơn, hiện tại tiếp diễn, tương lai đơn (will) dùng trong chương trình Tiểu học...' },
+      { id: 37, name: '💡 Từ vựng: Từ đồng nghĩa - trái nghĩa cơ bản (Synonyms & Antonyms)', size: '120 KB', uploadedAt: '2026-04-21', content: 'Danh sách các cặp từ đồng nghĩa - trái nghĩa cơ bản phù hợp học sinh Tiểu học...' },
+      { id: 38, name: '💡 Phát âm: Bảng phiên âm quốc tế IPA cơ bản', size: '110 KB', uploadedAt: '2026-04-21', content: 'Giới thiệu bảng phiên âm IPA cơ bản, giúp học sinh làm quen cách đọc từ mới đúng chuẩn...' },
+      { id: 39, name: '💡 Số đếm & Thời gian: Cách đọc giờ, ngày tháng Tiếng Anh', size: '95 KB', uploadedAt: '2026-04-21', content: 'Hướng dẫn cách đọc số đếm, giờ, ngày tháng bằng Tiếng Anh cho học sinh Tiểu học...' },
+      { id: 40, name: '💡 Câu giao tiếp: 100 mẫu câu giao tiếp cơ bản (Everyday English)', size: '130 KB', uploadedAt: '2026-04-21', content: 'Tổng hợp 100 mẫu câu giao tiếp thông dụng nhất phù hợp trình độ Tiểu học...' },
+      { id: 41, name: '💡 Bài hát: Lời bài hát tiếng Anh thiếu nhi phổ biến', size: '90 KB', uploadedAt: '2026-04-21', content: 'Tuyển tập lời một số bài hát tiếng Anh thiếu nhi thường dùng để khởi động tiết học...' },
+      { id: 42, name: '💡 Trò chơi: 50 trò chơi khởi động (Warm-up Games)', size: '125 KB', uploadedAt: '2026-04-21', content: 'Tổng hợp 50 trò chơi khởi động ngắn (5-10 phút) phù hợp đầu mỗi tiết Tiếng Anh...' },
+      { id: 43, name: '💡 Sổ tay: Lỗi phát âm/ngữ pháp phổ biến của học sinh Việt Nam', size: '100 KB', uploadedAt: '2026-04-21', content: 'Tổng hợp các lỗi tiếng Anh phổ biến học sinh Việt hay mắc phải và cách sửa...' },
+      { id: 44, name: '💡 Kỹ năng: Hướng dẫn viết chữ tiếng Anh đẹp (Handwriting)', size: '140 KB', uploadedAt: '2026-04-21', content: 'Hướng dẫn luyện viết chữ in thường/hoa tiếng Anh đúng chuẩn cho học sinh lớp 1-2...' },
+      { id: 45, name: '💡 Tài liệu: Danh sách truyện tranh/sách tiếng Anh thiếu nhi nên đọc', size: '130 KB', uploadedAt: '2026-04-21', content: 'Danh sách gợi ý sách/truyện tranh tiếng Anh đơn giản phù hợp học sinh Tiểu học tự đọc thêm...' }
     ]
   };
 
@@ -9487,7 +9507,7 @@ const AIChatPanel = ({ isOpen, onClose, data, setData, selectedClass, selectedBo
 💬 **GENERAL CHAT**: Hỏi gì đó khác (không dùng /)
 Ví dụ: "Giải thích khái niệm...", "Gợi ý tiêu đề bài...", v.v.
 
-🚀 Ví dụ: /soạn-bài Bài "Chí Phèo" - Tác phẩm của Nguyễn Huy Tưởng` }
+🚀 Ví dụ: /soạn-bài Unit 5 - My Family` }
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -9531,7 +9551,7 @@ Ví dụ: "Giải thích khái niệm...", "Gợi ý tiêu đề bài...", v.v.
               theme: args,
               lessonName: args,
               duration: '2 tiết',
-              mucTieu: `**1. Kiến thức:** Hiểu nội dung, nghệ thuật tác phẩm "${args}".\n**2. Năng lực:** Phân tích, thuyết trình, tư duy phê bình.\n**3. Phẩm chất:** Yêu thích văn học, trách nhiệm học tập.`,
+              mucTieu: `**1. Kiến thức:** Nắm được từ vựng, mẫu câu và ngữ pháp trọng tâm của bài "${args}".\n**2. Năng lực:** Nghe, nói, đọc, viết cơ bản; giao tiếp bằng Tiếng Anh đơn giản.\n**3. Phẩm chất:** Yêu thích môn học, chăm chỉ, trách nhiệm học tập.`,
               thietBi: '- SGK Global Success - Máy chiếu - Phiếu học tập - Tranh ảnh minh họa - Loa/audio',
               hoatDong1: `**HĐ1: MỞ ĐẦU (5p)**\nMục tiêu: Tạo hứng thú\nNội dung: Giới thiệu về "${args}"`,
               hoatDong2: `**HĐ2: HÌNH THÀNH KIẾN THỨC (20p)**\n${result.text.substring(0, 500)}...`,
